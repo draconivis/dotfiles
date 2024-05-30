@@ -1,0 +1,30 @@
+import = [
+  # uncomment the flavour you want below:
+  # "~/.config/alacritty/catppuccin-latte.toml"
+  # "~/.config/alacritty/catppuccin-frappe.toml"
+  "~/.config/alacritty/catppuccin-macchiato.toml"
+  # "~/.config/alacritty/catppuccin-mocha.toml"
+  # "~/.config/alacritty/rose-pine-moon.toml"
+]
+
+live_config_reload = true
+
+[font]
+size = 10.0
+
+[font.normal]
+family = "JetBrainsMonoNF"
+style = "Regular"
+
+[shell]
+args = ["new-session", "-A", "-s", "main"]
+program = "tmux"
+
+[window]
+dynamic_padding = true
+# startup_mode = "Maximized"
+decorations = "None"
+
+[window.padding]
+# x = 0
+# y = 10

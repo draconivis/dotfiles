@@ -1,0 +1,23 @@
+# completions
+mattmc3/zephyr path:plugins/completion
+zsh-users/zsh-completions
+#g-plane/pnpm-shell-completion
+
+# regular plugins
+ael-code/zsh-colored-man-pages
+davidde/git
+
+## work
+#mattberther/zsh-pyenv
+#sptndc/phpenv.plugin.zsh
+#lukechilds/zsh-nvm
+
+# prompt
+romkatv/powerlevel10k
+
+# syntax highlighting
+zdharma-continuum/fast-syntax-highlighting
+
+# these plugins need to be loaded last
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search
