@@ -4,9 +4,7 @@ hyperextensible vim-based text editor
 
 ## config
 
-~~i used the [kickstart](https://github.com/nvim-lua/kickstart.nvim) config as a starting point and it evolved from there.~~
-after using kickstart, i watched this [beginner guide series](https://youtube.com/playlist?list=PLsz00TDipIffreIaUNk64KxTIkQaGguqn&si=I4AVZqZtu4DN_a-H) on youtube (channel recommendation btw) to set up the config
-and copied some things over from the kickstart config (like the automatic setup for lsp handlers)
+i used the [kickstart](https://github.com/nvim-lua/kickstart.nvim) config as a starting point and it evolved from there.
 
 ### dependencies
 
