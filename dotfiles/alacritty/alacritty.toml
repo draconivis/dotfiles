@@ -5,10 +5,8 @@ family = "JetBrainsMonoNF"
 style = "Regular"
 
 [shell]
-# TMUX
 program = "tmux"
 args = ["new-session", "-A", "-s", "main"]
-# Zellij
 # program = "zellij"
 # args = ["--session", "main"]
 
