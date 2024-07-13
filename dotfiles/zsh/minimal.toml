@@ -1,0 +1,11 @@
+version = 2
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    template = 'test'
+    style = 'plain'
