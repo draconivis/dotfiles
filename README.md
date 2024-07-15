@@ -5,11 +5,13 @@ arch linux dotfiles & setup instructions
 ## packages
 
 the main packages i use everywhere are in [packages](./packages).
-additional packages for different scenarios can be found in [addonPackages](./addonPackages).
+additional packages can be found in [addonPackages](./addonPackages).
 
 ## setup
 
-to automatically install the packages and link the dotfiles, run [`setup.sh`](./setup.sh).
+### packages
+
+to install the packages, run [`install_arch_packages.sh`](./install_arch_packages.sh).
 
 the script accepts some options, these are:
 - b > base packages
@@ -21,11 +23,18 @@ the script accepts some options, these are:
 
 e.g to install the base and laptop packages, run
 ```bash
-./setup.sh -b -l
+./install_arch_packages.sh -b -l
 ```
 
-it will then install the packages at once (sudo password may be required)
-and ask if you want to link the dotfiles as well.
+it will then install the packages (sudo password may be required)
+
+### dotfiles
+
+to link the dotfiles, run [`link_dotfiles.sh`](./link_dotfiles.sh).
+
+NOTE: It requires you to have [gum](https://github.com/charmbracelet/gum) installed
+
+it will create symlinks from this repo to .config and some other places.
 
 additional info on the dotfiles can be found in their respective READMEs.
 
