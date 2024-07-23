@@ -8,8 +8,8 @@ return {
 				ignored_buftypes = { "neo-tree", "dbui" },
 			})
 
-			require("which-key").register({
-				["<leader><leader>"] = { name = "Smart Splits Swap Buffer", _ = "which_key_ignore" },
+			require("which-key").add({
+				{ "<leader><leader>", name = "Smart Splits Swap Buffer" },
 			})
 
 			vim.keymap.set("n", "<A-h>", require("smart-splits").resize_left, { desc = "Resize split left" })

@@ -15,11 +15,11 @@ return {
 			vim.keymap.set("n", "tl", function()
 				require("trouble").toggle("lsp_references")
 			end, { desc = "[T]rouble [l]sp reference" })
-			require("which-key").register({
-				["t"] = { name = "[T]rouble", _ = "which_key_ignore" },
-				-- ["tt"] = { name = "[T]rouble [t]oggle", _ = "which_key_ignore" },
-				-- ["tq"] = { name = "[T]rouble [q]uickfix", _ = "which_key_ignore" },
-				-- ["tl"] = { name = "[T]rouble [l]sp reference", _ = "which_key_ignore" },
+			require("which-key").add({
+				{ "t", name = "[T]rouble" },
+				-- { "tt", name = "[T]rouble [t]oggle" },
+				-- { "tq", name = "[T]rouble [q]uickfix" },
+				-- { "tl", name = "[T]rouble [l]sp reference" },
 			})
 		end,
 		-- opts = {
