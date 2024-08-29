@@ -177,6 +177,7 @@ return { -- language server and everything related
 			local servers = {
 				twiggy_language_server = {},
 				phpactor = {},
+				pylsp = {},
 				tsserver = {},
 				gopls = {},
 				templ = {},
