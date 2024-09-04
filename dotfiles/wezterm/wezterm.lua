@@ -8,7 +8,6 @@ local act = wezterm.action
 local config = wezterm.config_builder()
 
 config.color_scheme = "Catppuccin Mocha"
-config.font = wezterm.font("JetBrainsMonoNF")
 config.tab_bar_at_bottom = true
 config.window_padding = {
 	left = 3,
@@ -68,6 +67,8 @@ config.keys = {
 	--- scrollback
 	{ key = "UpArrow", mods = "ALT", action = act.ScrollByPage(-0.6) },
 	{ key = "DownArrow", mods = "ALT", action = act.ScrollByPage(0.6) },
+	--- search in scrollback
+	{ key = "/", mods = "ALT", action = act.Search({ CaseInSensitiveString = "" }) },
 }
 
 for i = 1, 9 do
@@ -94,6 +95,14 @@ config.key_tables = {
 		{ key = "l", action = act.AdjustPaneSize({ "Right", 1 }) },
 		-- Cancel the mode by pressing escape
 		{ key = "Escape", action = "PopKeyTable" },
+	},
+	search_mode = {
+		{ key = "Enter", mods = "NONE", action = act.CopyMode("PriorMatch") },
+		{ key = "Escape", mods = "NONE", action = act.CopyMode("Close") },
+		{ key = "n", mods = "CTRL", action = act.CopyMode("NextMatch") },
+		{ key = "p", mods = "CTRL", action = act.CopyMode("PriorMatch") },
+		{ key = "r", mods = "CTRL", action = act.CopyMode("CycleMatchType") },
+		{ key = "u", mods = "CTRL", action = act.CopyMode("ClearPattern") },
 	},
 }
 
