@@ -17,6 +17,7 @@ return {
 	},
 	{ -- Autoformat
 		"stevearc/conform.nvim",
+		tag = "v7.1.0",
 		lazy = false,
 		keys = {
 			{
