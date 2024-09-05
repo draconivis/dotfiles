@@ -176,8 +176,7 @@ return { -- language server and everything related
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
 				twiggy_language_server = {},
-				-- phpactor = {},
-				intelephense = {},
+				phpactor = {},
 				pylsp = {},
 				tsserver = {},
 				gopls = {},
