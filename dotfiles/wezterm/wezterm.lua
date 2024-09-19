@@ -7,6 +7,35 @@ local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabl
 local act = wezterm.action
 local config = wezterm.config_builder()
 
+config.font = wezterm.font_with_fallback({ "Monaspace Neon" })
+config.font_rules = {
+	{
+		italic = true,
+		intensity = "Bold",
+		font = wezterm.font_with_fallback({
+			family = "Monaspace Radon",
+			weight = "Bold",
+			style = "Italic",
+		}),
+	},
+	{
+		italic = true,
+		intensity = "Half",
+		font = wezterm.font_with_fallback({
+			family = "Monaspace Radon",
+			weight = "DemiBold",
+			style = "Italic",
+		}),
+	},
+	{
+		italic = true,
+		intensity = "Normal",
+		font = wezterm.font_with_fallback({
+			family = "Monaspace Radon",
+			style = "Italic",
+		}),
+	},
+}
 config.color_scheme = "Catppuccin Mocha"
 config.tab_bar_at_bottom = true
 config.window_padding = {
