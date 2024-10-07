@@ -1,42 +1,10 @@
--- Pull in the wezterm API
 local wezterm = require("wezterm")
--- import plugins
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
 local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
-
 local act = wezterm.action
 local config = wezterm.config_builder()
 
-config.font = wezterm.font_with_fallback({ "Monaspace Neon" })
-config.font_rules = {
-	{
-		italic = true,
-		intensity = "Bold",
-		font = wezterm.font_with_fallback({
-			family = "Monaspace Radon",
-			weight = "Bold",
-			style = "Italic",
-		}),
-	},
-	{
-		italic = true,
-		intensity = "Half",
-		font = wezterm.font_with_fallback({
-			family = "Monaspace Radon",
-			weight = "DemiBold",
-			style = "Italic",
-		}),
-	},
-	{
-		italic = true,
-		intensity = "Normal",
-		font = wezterm.font_with_fallback({
-			family = "Monaspace Radon",
-			style = "Italic",
-		}),
-	},
-}
-config.color_scheme = "Catppuccin Mocha"
+config.color_scheme = "Kanagawa (Gogh)"
 config.tab_bar_at_bottom = true
 config.window_padding = {
 	left = 3,
@@ -84,7 +52,9 @@ config.keys = {
 		mods = "ALT",
 		action = act.ActivateKeyTable({ name = "resize_pane", one_shot = false }),
 	},
-	--- switch pane
+	--- rotate panes
+	{ key = "q", mods = "ALT", action = act.RotatePanes("Clockwise") },
+	--- switch active pane
 	{ key = "LeftArrow", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Left") },
 	{ key = "h", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Left") },
 	{ key = "DownArrow", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Down") },
@@ -138,8 +108,7 @@ config.key_tables = {
 tabline.setup({
 	options = {
 		icons_enabled = true,
-		theme = "Catppuccin Mocha",
-		color_overrides = {},
+		theme = "Kanagawa (Gogh)",
 		section_separators = {
 			left = "",
 			right = "",
@@ -169,7 +138,6 @@ tabline.setup({
 -- apply plugins
 workspace_switcher.set_zoxide_path("~/.nix-profile/bin/zoxide")
 workspace_switcher.apply_to_config(config)
--- wezterm_tabs.apply_to_config(config)
 tabline.apply_to_config(config)
 
 -- and finally, return the configuration to wezterm
