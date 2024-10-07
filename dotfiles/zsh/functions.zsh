@@ -10,3 +10,11 @@
 #             rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
 #     fi
 # }
+
+function gprbm()
+{
+  git checkout $(git_main_branch)
+  git pull
+  git checkout -
+  git rebase $(git_main_branch)
+}
