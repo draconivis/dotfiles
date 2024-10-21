@@ -46,13 +46,19 @@ config.keys = {
 	--- splitting
 	{ key = "|", mods = "ALT|SHIFT", action = act.SplitHorizontal },
 	{ key = '"', mods = "ALT|SHIFT", action = act.SplitVertical },
-	--- activate pane resizing
+	--- closing
+	{
+		key = "w",
+		mods = "ALT",
+		action = wezterm.action.CloseCurrentPane({ confirm = true }),
+	},
+	--- activate resizing
 	{
 		key = "r",
 		mods = "ALT",
 		action = act.ActivateKeyTable({ name = "resize_pane", one_shot = false }),
 	},
-	--- rotate panes
+	--- rotating
 	{ key = "q", mods = "ALT", action = act.RotatePanes("Clockwise") },
 	--- switch active pane
 	{ key = "LeftArrow", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Left") },
