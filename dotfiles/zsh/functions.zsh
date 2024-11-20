@@ -13,8 +13,16 @@
 
 function gprbm()
 {
-  git checkout $(git_main_branch)
+  git switch $(git_main_branch)
   git pull
-  git checkout -
+  git switch -
   git rebase $(git_main_branch)
+}
+
+function gpmm()
+{
+  git switch $(git_main_branch)
+  git pull
+  git switch -
+  git merge $(git_main_branch)
 }

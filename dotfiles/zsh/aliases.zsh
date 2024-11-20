@@ -7,3 +7,6 @@ alias ....='cd ../../..'
 alias lg=lazygit
 alias bc=bin/console
 alias dbx=devbox
+alias gsw='git switch'
+alias cat=bat
+alias less=moar
