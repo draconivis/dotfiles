@@ -1,4 +1,4 @@
-#!zsh
+#!/usr/bin/env bash
 
 # save locations in variables
 rootPath=$(pwd)/dotfiles
@@ -50,7 +50,6 @@ for file in $(ls dotfiles/x11); do
     [[ -e $HOME/.$file || -L $HOME/.$file ]] && rm $HOME/.$file
     ln -s $configPath/x11/$file $HOME/.$file
 done
-;;
 
 gum style \
 	--border-foreground 57 --border double \

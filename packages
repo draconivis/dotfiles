@@ -5,7 +5,9 @@ awesome
 brightnessctl
 btop
 deezer
+devbox
 dex
+direnv
 discord
 easyeffects
 evremap-git
@@ -17,11 +19,13 @@ gimp
 git-delta
 gnome-calculator
 gnome-keyring
+gum
 gvfs
 i3lock-color
 i3lock-fancy-git
 interception-caps2esc
 lain-git
+lazygit
 libreoffice-fresh
 lsd
 lsp-plugins
@@ -31,7 +35,9 @@ moar
 mpv
 neovim
 network-manager-applet
+noto-fonts-emoji
 npm
+oh-my-posh-bin
 papirus-icon-theme
 picom
 qtile
@@ -44,9 +50,9 @@ thunar
 thunar-archive-plugin
 thunar-volman
 transmission-gtk
-ttf-jetbrains-mono-nerd
 vscodium-bin
 webp-pixbuf-loader
+wezterm
 xclip
 xorg-xrdb
 xss-lock

@@ -1,4 +1,4 @@
-#!bash
+#!/usr/bin/env bash
 
 while getopts 'bglwop' flag; do
     case "$flag" in
