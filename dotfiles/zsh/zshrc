@@ -20,8 +20,8 @@ export NVM_LAZY_LOAD=true
 # export NVM_AUTO_USE=true # automatically run `nvm use` when entering a dir with a nvmrc. doesn't work with lazy loading
 
 # load plugins with antidote
-# source '/usr/share/zsh-antidote/antidote.zsh' # antidote installed from AUR
-source ~/.nix-profile/share/antidote/antidote.zsh # antidote installed from NIX
+source '/usr/share/zsh-antidote/antidote.zsh' # antidote installed from AUR
+# source ~/.nix-profile/share/antidote/antidote.zsh # antidote installed from NIX
 antidote load ${ZSH_HOME}/zsh_plugins.txt
 
 # post plugin load configs
@@ -38,3 +38,5 @@ eval "$(direnv hook zsh)"
 
 ## zoxide (better zsh-z)
 eval "$(zoxide init --cmd cd zsh)"
+
+if [ -e /home/patrick/.nix-profile/etc/profile.d/nix.sh ]; then . /home/patrick/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
