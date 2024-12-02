@@ -132,8 +132,8 @@ tabline.setup({
 		tabline_a = {},
 		tabline_b = {},
 		tabline_c = { " " },
-		tab_active = { "tab_index", { "process", padding = { left = 0, right = 1 } } },
-		tab_inactive = { "tab_index", { "process", padding = { left = 0, right = 1 } } },
+		tab_active = { "index", { "process", padding = { left = 0, right = 1 } } },
+		tab_inactive = { "index", { "process", padding = { left = 0, right = 1 } } },
 		tabline_x = {},
 		tabline_y = { "mode" },
 		tabline_z = { "workspace" },
@@ -142,7 +142,7 @@ tabline.setup({
 })
 
 -- apply plugins
-workspace_switcher.set_zoxide_path("~/.nix-profile/bin/zoxide")
+-- workspace_switcher.set_zoxide_path("~/.nix-profile/bin/zoxide") --zoxide installed from Nix
 workspace_switcher.apply_to_config(config)
 tabline.apply_to_config(config)
 
