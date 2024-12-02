@@ -1,15 +1,19 @@
-import = ["~/.config/alacritty/catppuccin-mocha.toml"]
-live_config_reload = true
 [font.normal]
-family = "JetBrainsMonoNF"
+family = "JetBrainsMono"
 style = "Regular"
 
-[shell]
-program = "tmux"
-args = ["new-session", "-A", "-s", "main"]
+# [shell]
+# program = "tmux"
+# args = ["new-session", "-A", "-s", "main"]
 # program = "zellij"
 # args = ["--session", "main"]
 
 [window]
 decorations = "None"
 dynamic_padding = true
+
+[general]
+live_config_reload = true
+import = ["~/.config/alacritty/catppuccin-mocha.toml"]
+
+[terminal]
