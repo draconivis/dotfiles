@@ -17,7 +17,7 @@ theme.wallpaper = function()
 	}
 	return wallpapers[math.random(#wallpapers)]
 end
-theme.font = "JetBrainsMono NF 10"
+theme.font = "JetBrains Mono 10"
 
 -- Catppuccin
 -- local fg                                        = "#cdd6f4"

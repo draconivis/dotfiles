@@ -70,7 +70,7 @@ beautiful.init("/home/patrick/.config/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 local terminal = "wezterm"
-local lock_command = "i3lock-fancy -pf 'JetBrainsMono-NF-Regular'"
+local lock_command = "i3lock-fancy -pf 'JetBrains-Mono-Regular'"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -188,7 +188,8 @@ end)
 local battery = battery_widget({
 	show_current_level = true,
 	font = beautiful.font,
-	path_to_icons = "/home/patrick/.nix-profile/share/icons/Arc/status/symbolic/",
+	-- path_to_icons = "/home/patrick/.nix-profile/share/icons/Arc/status/symbolic/",-- Nix
+	path_to_icons = "/usr/share/icons/Arc/status/symbolic/", -- Arch
 })
 
 local brightness = brightness_widget({
