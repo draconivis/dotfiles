@@ -5,17 +5,18 @@ local dpi = require("beautiful.xresources").apply_dpi
 local os = os
 theme.dir = os.getenv("HOME") .. "/.config/awesome/themes/default/"
 theme.wallpaper = function()
-	local wallpaper_dir = "/home/patrick/linux-stuff/wallpapers/landscape/"
-	local wallpapers = {
-		wallpaper_dir .. "spaceship.png",
-		wallpaper_dir .. "Mega_Black_Hole_Normal_2.png",
-		wallpaper_dir .. "Mega_Black_Hole.png",
-		wallpaper_dir .. "Mega_Black_Hole_gigi.png",
-		wallpaper_dir .. "fluffy_galaxy.png",
-		wallpaper_dir .. "road_to_samarkand.png",
-		wallpaper_dir .. "spooky_spill.jpg",
-	}
-	return wallpapers[math.random(#wallpapers)]
+	local wallpaper_dir = "/home/patrick/wallpapers/landscape/"
+-- 	local wallpapers = {
+-- 		wallpaper_dir .. "spaceship.png",
+-- 		wallpaper_dir .. "Mega_Black_Hole_Normal_2.png",
+-- 		wallpaper_dir .. "Mega_Black_Hole.png",
+-- 		wallpaper_dir .. "Mega_Black_Hole_gigi.png",
+-- 		wallpaper_dir .. "fluffy_galaxy.png",
+-- 		wallpaper_dir .. "road_to_samarkand.png",
+-- 		wallpaper_dir .. "spooky_spill.jpg",
+-- 	}
+-- 	return wallpapers[math.random(#wallpapers)]
+	return wallpaper_dir .. "WorldofNier_6.png"
 end
 theme.font = "JetBrains Mono 10"
 
