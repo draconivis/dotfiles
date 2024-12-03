@@ -27,7 +27,6 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
 local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
--- local volume_widget     = require('awesome-wm-widgets.pactl-widget.volume')
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -197,10 +196,6 @@ local brightness = brightness_widget({
 	base = 50,
 	step = 10,
 })
-
--- local pactl = volume_widget()
-
--- }}}
 
 -- {{{ Wibar
 -- Create a wibox for each screen and add it
@@ -446,17 +441,23 @@ globalkeys = gears.table.join(
 	end, { description = "show rofi", group = "launcher" }),
 
 	-- Volume Keys
-	-- awful.key({}, "XF86AudioRaiseVolume", function() volume_widget:inc() end),
-	-- awful.key({}, "XF86AudioLowerVolume", function() volume_widget:dec() end),
-	-- awful.key({}, "XF86AudioMute", function() volume_widget:toggle() end),
+	-- awful.key({}, "XF86AudioRaiseVolume", function()
+	-- 	awful.spawn.with_shell("wpctl set-volume @DEFAULT_SINK@ 2%+")
+	-- end),
+	-- awful.key({}, "XF86AudioLowerVolume", function()
+	-- 	awful.spawn.with_shell("wpctl set-volume @DEFAULT_SINK@ 2%-")
+	-- end),
+	-- awful.key({}, "XF86AudioMute", function()
+	-- 	awful.spawn.with_shell("wpctl set-mute @DEFAULT_SINK@ toggle")
+	-- end),
 	awful.key({}, "XF86AudioRaiseVolume", function()
-		awful.spawn.with_shell("wpctl set-volume @DEFAULT_SINK@ 2%+")
+		awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ +2%")
 	end),
 	awful.key({}, "XF86AudioLowerVolume", function()
-		awful.spawn.with_shell("wpctl set-volume @DEFAULT_SINK@ 2%-")
+		awful.spawn.with_shell("pactl set-sink-volume @DEFAULT_SINK@ -2%")
 	end),
 	awful.key({}, "XF86AudioMute", function()
-		awful.spawn.with_shell("wpctl set-mute @DEFAULT_SINK@ toggle")
+		awful.spawn.with_shell("pactl set-sink-mute @DEFAULT_SINK@ toggle")
 	end),
 
 	-- Brightness keys

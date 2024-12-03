@@ -5,7 +5,7 @@ local dpi = require("beautiful.xresources").apply_dpi
 local os = os
 theme.dir = os.getenv("HOME") .. "/.config/awesome/themes/default/"
 theme.wallpaper = function()
-	local wallpaper_dir = "/home/patrick/wallpapers/landscape/"
+	local wallpaper_dir = "/home/patrick/Pictures/wallpapers/landscape/"
 -- 	local wallpapers = {
 -- 		wallpaper_dir .. "spaceship.png",
 -- 		wallpaper_dir .. "Mega_Black_Hole_Normal_2.png",
