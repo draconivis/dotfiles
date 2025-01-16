@@ -26,3 +26,8 @@ function gpmm()
   git switch -
   git merge $(git_main_branch)
 }
+
+function phpsw () {
+  brew unlink php@$1
+  brew link --overwrite --force shivammathur/php/php@$1
+}

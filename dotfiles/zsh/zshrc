@@ -11,17 +11,18 @@ source ${ZSH_HOME}/aliases.zsh
 source ${ZSH_HOME}/functions.zsh
 
 # gpg-agent config (yubikey as ssh key)
-export GPG_TTY="$(tty)"
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-gpgconf --launch gpg-agent
+# export GPG_TTY="$(tty)"
+# export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+# gpgconf --launch gpg-agent
 
 # pre plugin load configs
 export NVM_LAZY_LOAD=true
 # export NVM_AUTO_USE=true # automatically run `nvm use` when entering a dir with a nvmrc. doesn't work with lazy loading
 
 # load plugins with antidote
-source '/usr/share/zsh-antidote/antidote.zsh' # antidote installed from AUR
+# source '/usr/share/zsh-antidote/antidote.zsh' # antidote installed from AUR
 # source ~/.nix-profile/share/antidote/antidote.zsh # antidote installed from NIX
+source $HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh # antidote installed with brew
 antidote load ${ZSH_HOME}/zsh_plugins.txt
 
 # post plugin load configs
@@ -38,5 +39,8 @@ eval "$(direnv hook zsh)"
 
 ## zoxide (better zsh-z)
 eval "$(zoxide init --cmd cd zsh)"
+
+# autocompletion
+autoload -U compinit; compinit
 
 if [ -e /home/patrick/.nix-profile/etc/profile.d/nix.sh ]; then . /home/patrick/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
