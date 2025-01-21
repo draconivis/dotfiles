@@ -15,6 +15,8 @@ config.window_padding = {
 }
 config.leader = { key = "a", mods = "CTRL" }
 config.disable_default_key_bindings = true
+-- if this is disabled, used the right option for umlauts, see https://wezfurlong.org/wezterm/config/keyboard-concepts.html#macos-left-and-right-option-key
+config.send_composed_key_when_left_alt_is_pressed = true
 config.keys = {
 	-- wezterm controls
 	{ key = "r",          mods = "CTRL|SHIFT", action = act.ReloadConfiguration },
@@ -36,7 +38,7 @@ config.keys = {
 	{ key = "p",          mods = "ALT",        action = act.ActivateTabRelative(-1) },
 	{ key = "LeftArrow",  mods = "ALT",        action = act.ActivateTabRelative(-1) },
 	--- switch to last active tab
-	{ key = "a",          mods = "ALT",        action = act.ActivateLastTab },
+	-- { key = "a",          mods = "ALT",        action = act.ActivateLastTab },
 	--- move tab right
 	{ key = ">",          mods = "ALT|SHIFT",  action = act.MoveTabRelative(1) },
 	{ key = "RightArrow", mods = "ALT|SHIFT",  action = act.MoveTabRelative(1) },
