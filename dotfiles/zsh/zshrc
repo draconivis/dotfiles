@@ -1,14 +1,29 @@
 # basic zsh conf
 export ZSH_HOME=$HOME/.config/zsh
-export HISTFILE=$HOME/.history
-export HISTSIZE=1000
-export SAVEHIST=1000
-export EDITOR=nvim
+## History
+HISTFILE=$HOME/.history
+HISTSIZE=5000
+SAVEHIST=5000
+HISTDUP=erase
+setopt appendhistory
 setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+# export EDITOR=nvim
+
+bindkey -e
 
 # load aliases & functions
 source ${ZSH_HOME}/aliases.zsh
 source ${ZSH_HOME}/functions.zsh
+
+if [[ -f "/opt/homebrew/bin/brew" ]] then
+  # If you're using macOS, you'll want this enabled
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
 # gpg-agent config (yubikey as ssh key)
 # export GPG_TTY="$(tty)"
@@ -16,7 +31,7 @@ source ${ZSH_HOME}/functions.zsh
 # gpgconf --launch gpg-agent
 
 # pre plugin load configs
-export NVM_LAZY_LOAD=true
+# export NVM_LAZY_LOAD=true
 # export NVM_AUTO_USE=true # automatically run `nvm use` when entering a dir with a nvmrc. doesn't work with lazy loading
 
 # load plugins with antidote
@@ -40,7 +55,18 @@ eval "$(direnv hook zsh)"
 ## zoxide (better zsh-z)
 eval "$(zoxide init --cmd cd zsh)"
 
+## fzf
+eval "$(fzf --zsh)"
+
 # autocompletion
 autoload -U compinit; compinit
+## styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+export PATH="$PATH:/nix/var/nix/profiles/default/bin"
 
 if [ -e /home/patrick/.nix-profile/etc/profile.d/nix.sh ]; then . /home/patrick/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
