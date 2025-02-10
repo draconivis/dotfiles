@@ -5,7 +5,7 @@ local act = wezterm.action
 local config = wezterm.config_builder()
 
 config.font_size = 15
-config.color_scheme = "Kanagawa (Gogh)"
+config.color_scheme = "Catppuccin Latte"
 config.tab_bar_at_bottom = true
 config.window_padding = {
 	left = 0,
@@ -118,7 +118,7 @@ config.key_tables = {
 tabline.setup({
 	options = {
 		icons_enabled = true,
-		theme = "Kanagawa (Gogh)",
+		theme = "Catppuccin Latte",
 		section_separators = {
 			left = "",
 			right = "",
