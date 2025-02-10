@@ -1,17 +1,18 @@
-# linux
+# dotfiles
 
-arch linux dotfiles & setup instructions
+dotfiles & setup instructions
 
-## packages
+## linux
+### packages
 
 the main packages i use everywhere are in [packages](./packages).
 additional packages can be found in [addonPackages](./addonPackages).
 
-## setup
+### setup
 
-### packages
+#### packages
 
-to install the packages, run [`install_arch_packages.sh`](./install_arch_packages.sh).
+to install the packages, run [`install_arch_packages.sh`](./install_arch_packages.sh) on an arch install.
 
 the script accepts some options, these are:
 - b > base packages
@@ -22,13 +23,13 @@ the script accepts some options, these are:
 - p > printing packages
 
 e.g to install the base and laptop packages, run
-```bash
+```sh
 ./install_arch_packages.sh -b -l
 ```
 
 it will then install the packages (sudo password may be required)
 
-### dotfiles
+#### dotfiles
 
 to link the dotfiles, run [`link_dotfiles.sh`](./link_dotfiles.sh).
 
@@ -38,11 +39,11 @@ it will create symlinks from this repo to .config and some other places.
 
 additional info on the dotfiles can be found in their respective READMEs.
 
-## various software stuff / fixes / configs
+### various software stuff / fixes / configs
 
-### keyboard
+#### keyboard
 
-#### repetition settings
+##### repetition settings
 
 - repeat delay: 175
 - repeat speed: 100
@@ -59,7 +60,7 @@ EndSection
 ```
 notice that in the AutoRepeat line i put 10 instead of 100 because the unit here is Hz, so lower number = more repitions, see [here](https://wiki.archlinux.org/title/Xorg/Keyboard_configuration#Using_AutoRepeat_configuration_option)
 
-#### caps remap
+##### caps remap
 
 if you used my base packages, then `interception-caps2esc` is already installed, else install that.
 
@@ -67,18 +68,18 @@ edit `/etc/interception/udevmon.yaml` and add [the JOB from the README](https://
 
 then start the daemon with `sudo systemctl enable --now udevmon.service`
 
-### firefox adjustments
+#### firefox adjustments
 
-#### don't exit when closing last tab
+##### don't exit when closing last tab
 
 open `about:config`, search `closeWindowWithLastTab` and toggle to `false`
 
-#### invert scroll direction + increased scroll height
+##### invert scroll direction + increased scroll height
 
 if for some reason the DE/WM setting (~/.Xmodmap) doesn't apply, open `about:config` and search for `mousewheel.default.delta_multiplier_y` and set it to a negative number.
 negative for the scroll direction and the higher the number, the more lines you scroll.
 
-### system beep - autostart
+#### system beep - autostart
 
 to turn that annoying system beep off, you can:
 - run `rmmod pcspkr`
@@ -86,7 +87,7 @@ to turn that annoying system beep off, you can:
 - run `xset b off`
 - uncomment `set bell none` in `/etc/inputrc`
 
-### printing / scanning
+#### printing / scanning
 
 **install packages with `setup.sh -p`**
 
@@ -98,42 +99,50 @@ for my hp printer, there are following things i installed for printing / scannin
 the printer settings should detect the printer and it should be fairly easy to set up.
 if you open xsane, it should automatically detect the scanner, but you can also run `hp-setup` to set up the printer.
 
-### [Pulseaudio muting things](https://forum.teamspeak.com/threads/135702-Ubuntu-Teamspeak-mutet-andere-Anwendungen?p=457097#post457097)
+#### [Pulseaudio muting things](https://forum.teamspeak.com/threads/135702-Ubuntu-Teamspeak-mutet-andere-Anwendungen?p=457097#post457097)
 
 After i joined a Teamspeak channel, Spotify suddenly stopped playing and i couldn't get it back to work. Then i found out, that the cork-module is loaded by default, which mutes other applications based on roles (teamspeak was phone so it muted the others to prevent missing the phone call)
 
-### [enabling nvidia overclocking](https://wiki.archlinux.org/title/NVIDIA/Tips_and_tricks#Enabling_overclocking)
+#### [enabling nvidia overclocking](https://wiki.archlinux.org/title/NVIDIA/Tips_and_tricks#Enabling_overclocking)
 
 there's also [GreenWithEnvy](https://github.com/dankamongmen/GreenWithEnvy) but it reqquires a more involved setup and didn't work for me
 
-### [focusrite scarlet solo](https://thanede.wordpress.com/2017/07/03/getting-a-focusrite-scarlett-solo-to-work-under-linux-common-issues/)
+#### [focusrite scarlet solo](https://thanede.wordpress.com/2017/07/03/getting-a-focusrite-scarlett-solo-to-work-under-linux-common-issues/)
 
 some things to fix the scarlet solo on liux (like disabling the usb power optimization)
 
 UPD@20.04.23: i reinstalled endeavour and the interface is not turning off anymore...
 
-### [webp support in ristrettro](https://www.reddit.com/r/xfce/comments/v1tbp4/set_default_application_to_open_imagewebp_files/iaoi06c/)
+#### [webp support in ristrettro](https://www.reddit.com/r/xfce/comments/v1tbp4/set_default_application_to_open_imagewebp_files/iaoi06c/)
 
 **in [default package list](./packages)**
 
 ristretto doesn't support webp by default, the package `webp-pixbuf-loader` adds that
 
-# work
-work related stuff
+## mac
 
-## various software stuff / fixes / configs
+### various software stuff / fixes / configs
 
-### vagrant
-if NFS has a timout, either disable the firewall (not recommended),
-or just add a rule to allow connection.
+#### keyboard setup
 
-to add the rule:
-- run `rpcinfo -p | grep nfs` to figure out the correct port(s)
-- open firewall application
-- select `trusted` zone
-- select `ports` tab
-- click on add
-- enter the port and protocol from before (usually 2049 for TCP / 111 for UDP)
+run
+```
+defaults write -g InitialKeyRepeat -int 10
+defaults write -g KeyRepeat -int 1
+```
+and log out / in or restart to apply changes
+
+[website to test settings](https://mac-key-repeat.zaymon.dev/)
+
+#### nvm install
+
+To install node versions older than 16 on a m-chip mac, refer to the nvm readme: [MacOS Troubleshooting -> Macs with Apple Silicon chips](https://github.com/nvm-sh/nvm?tab=readme-ov-file#macos-troubleshooting),
+
+## apps
+
+some apps that aren't installed with brew:
+
+- [autoraise](https://github.com/sbmpost/AutoRaise)
 
 # alternatives
 
