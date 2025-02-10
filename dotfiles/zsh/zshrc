@@ -12,7 +12,8 @@ setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
-# export EDITOR=nvim
+export EDITOR=nvim
+# export VISUAL=nvim
 
 bindkey -e
 
@@ -31,7 +32,7 @@ fi
 # gpgconf --launch gpg-agent
 
 # pre plugin load configs
-# export NVM_LAZY_LOAD=true
+export NVM_LAZY_LOAD=true
 # export NVM_AUTO_USE=true # automatically run `nvm use` when entering a dir with a nvmrc. doesn't work with lazy loading
 
 # load plugins with antidote

@@ -31,3 +31,13 @@ function phpsw () {
   brew unlink php@$1
   brew link --overwrite --force shivammathur/php/php@$1
 }
+
+function bru () {
+  brew update
+  brew outdated
+  read "ans?upgrade packages? [Y/n]"
+  case $ans in
+    N|n ) ;;
+    Y|y|* ) brew upgrade;;
+  esac
+}
