@@ -138,12 +138,41 @@ and log out / in or restart to apply changes
 
 To install node versions older than 16 on a m-chip mac, refer to the nvm readme: [MacOS Troubleshooting -> Macs with Apple Silicon chips](https://github.com/nvm-sh/nvm?tab=readme-ov-file#macos-troubleshooting),
 
-## apps
+### apps
 
 some apps that aren't installed with brew:
 
 - [autoraise](https://github.com/sbmpost/AutoRaise)
 
+## git
+some gitconfig that you'd probably want to use:
+
+```
+# if you use git-delta
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
+
+[push]
+    autoSetupRemote = true
+
+[init]
+    defaultBranch = main
+
+[rerere]
+    enabled = true
+```
 # alternatives
 
 here are some alternatives to linux commands that may be better
