@@ -61,6 +61,7 @@ eval "$(fzf --zsh)"
 
 # autocompletion
 autoload -U compinit; compinit
+
 ## styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
