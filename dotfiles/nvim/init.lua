@@ -79,12 +79,6 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move current Line Down" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move current Line Up" })
 
--- Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
@@ -133,11 +127,13 @@ require("lazy").setup({
 				},
 			},
 			on_attach = function(bufnr)
+				local gitsigns = require("gitsigns")
+				vim.keymap.set("n", "<leader>gp", gitsigns.preview_hunk, { buffer = bufnr, desc = "Preview git hunk" })
 				vim.keymap.set(
 					"n",
-					"<leader>gp",
-					require("gitsigns").preview_hunk,
-					{ buffer = bufnr, desc = "Preview git hunk" }
+					"<leader>gi",
+					gitsigns.preview_hunk_inline,
+					{ buffer = bufnr, desc = "Preview git hunk inline" }
 				)
 			end,
 		},
@@ -189,6 +185,7 @@ require("lazy").setup({
 				spec = {
 					{ "<leader>c", group = "[C]ode", mode = { "n", "x" } },
 					{ "<leader>d", group = "[D]ocument" },
+					{ "<leader>g", group = "[G]it", mode = { "n", "x" } },
 					{ "<leader>h", group = "Git [H]unk", mode = { "n", "v" } },
 					{ "<leader>r", group = "[R]ename" },
 					{ "<leader>s", group = "[S]earch" },
@@ -197,104 +194,103 @@ require("lazy").setup({
 				},
 			},
 		},
-		{ -- Fuzzy Finder (files, lsp, etc)
-			"nvim-telescope/telescope.nvim",
-			event = "VimEnter",
-			branch = "0.1.x",
-			dependencies = {
-				"nvim-lua/plenary.nvim",
-				{ -- If encountering errors, see telescope-fzf-native README for installation instructions
-					"nvim-telescope/telescope-fzf-native.nvim",
-
-					-- `build` is used to run some command when the plugin is installed/updated.
-					-- This is only run then, not every time Neovim starts up.
-					build = "make",
-
-					-- `cond` is a condition used to determine whether this plugin should be
-					-- installed and loaded.
-					cond = function()
-						return vim.fn.executable("make") == 1
-					end,
-				},
-				{ "nvim-telescope/telescope-ui-select.nvim" },
-
-				-- Useful for getting pretty icons, but requires a Nerd Font.
-				{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
-			},
-			config = function()
-				-- Two important keymaps to use while in Telescope are:
-				--  - Insert mode: <c-/>
-				--  - Normal mode: ?
-				--
-				-- This opens a window that shows you all of the keymaps for the current
-				-- Telescope picker. This is really useful to discover what Telescope can
-				-- do as well as how to actually do it!
-
-				-- [[ Configure Telescope ]]
-				-- See `:help telescope` and `:help telescope.setup()`
-				require("telescope").setup({
-					defaults = {
-						layout_config = {
-							horizontal = { width = 0.9, height = 0.9, preview_width = 0.6 },
-						},
-					},
-					extensions = {
-						["ui-select"] = {
-							require("telescope.themes").get_dropdown(),
-						},
-					},
-				})
-
-				-- Enable Telescope extensions if they are installed
-				pcall(require("telescope").load_extension, "fzf")
-				pcall(require("telescope").load_extension, "ui-select")
-
-				-- See `:help telescope.builtin`
-				local builtin = require("telescope.builtin")
-				vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
-				vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
-				vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
-				vim.keymap.set("n", "<leader>sF", function()
-					builtin.find_files({ hidden = true, no_ignore = true })
-				end, { desc = "[S]earch [F]iles with hidden files" })
-				vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
-				vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
-				vim.keymap.set("n", "<leader>sW", function()
-					builtin.grep_string({ additional_args = { "--hidden", "--no-ignore" } })
-				end, { desc = "[S]earch current [W]ord with hidden files" })
-				vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
-				vim.keymap.set("n", "<leader>sG", function()
-					builtin.live_grep({ additional_args = { "--hidden", "--no-ignore" } })
-				end, { desc = "[S]earch by [G]rep with hidden files" })
-				vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
-				vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
-				vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-
-				-- Slightly advanced example of overriding default behavior and theme
-				vim.keymap.set("n", "<leader>/", function()
-					-- You can pass additional configuration to Telescope to change the theme, layout, etc.
-					builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-						winblend = 10,
-						previewer = false,
-					}))
-				end, { desc = "[/] Fuzzily search in current buffer" })
-
-				-- It's also possible to pass additional configuration options.
-				--  See `:help telescope.builtin.live_grep()` for information about particular keys
-				vim.keymap.set("n", "<leader>s/", function()
-					builtin.live_grep({
-						grep_open_files = true,
-						prompt_title = "Live Grep in Open Files",
-					})
-				end, { desc = "[S]earch [/] in Open Files" })
-
-				-- Shortcut for searching your Neovim configuration files
-				vim.keymap.set("n", "<leader>sn", function()
-					builtin.find_files({ cwd = vim.fn.stdpath("config") })
-				end, { desc = "[S]earch [N]eovim files" })
-			end,
-		},
-
+		-- { -- Fuzzy Finder (files, lsp, etc)
+		-- 	"nvim-telescope/telescope.nvim",
+		-- 	event = "VimEnter",
+		-- 	branch = "0.1.x",
+		-- 	dependencies = {
+		-- 		"nvim-lua/plenary.nvim",
+		-- 		{ -- If encountering errors, see telescope-fzf-native README for installation instructions
+		-- 			"nvim-telescope/telescope-fzf-native.nvim",
+		--
+		-- 			-- `build` is used to run some command when the plugin is installed/updated.
+		-- 			-- This is only run then, not every time Neovim starts up.
+		-- 			build = "make",
+		--
+		-- 			-- `cond` is a condition used to determine whether this plugin should be
+		-- 			-- installed and loaded.
+		-- 			cond = function()
+		-- 				return vim.fn.executable("make") == 1
+		-- 			end,
+		-- 		},
+		-- 		{ "nvim-telescope/telescope-ui-select.nvim" },
+		--
+		-- 		-- Useful for getting pretty icons, but requires a Nerd Font.
+		-- 		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
+		-- 	},
+		-- 	config = function()
+		-- 		-- Two important keymaps to use while in Telescope are:
+		-- 		--  - Insert mode: <c-/>
+		-- 		--  - Normal mode: ?
+		-- 		--
+		-- 		-- This opens a window that shows you all of the keymaps for the current
+		-- 		-- Telescope picker. This is really useful to discover what Telescope can
+		-- 		-- do as well as how to actually do it!
+		--
+		-- 		-- [[ Configure Telescope ]]
+		-- 		-- See `:help telescope` and `:help telescope.setup()`
+		-- 		require("telescope").setup({
+		-- 			defaults = {
+		-- 				layout_config = {
+		-- 					horizontal = { width = 0.9, height = 0.9, preview_width = 0.6 },
+		-- 				},
+		-- 			},
+		-- 			extensions = {
+		-- 				["ui-select"] = {
+		-- 					require("telescope.themes").get_dropdown(),
+		-- 				},
+		-- 			},
+		-- 		})
+		--
+		-- 		-- Enable Telescope extensions if they are installed
+		-- 		pcall(require("telescope").load_extension, "fzf")
+		-- 		pcall(require("telescope").load_extension, "ui-select")
+		--
+		-- 		-- See `:help telescope.builtin`
+		-- 		local builtin = require("telescope.builtin")
+		-- 		vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
+		-- 		vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
+		-- 		vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
+		-- 		vim.keymap.set("n", "<leader>sF", function()
+		-- 			builtin.find_files({ hidden = true, no_ignore = true })
+		-- 		end, { desc = "[S]earch [F]iles with hidden files" })
+		-- 		vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
+		-- 		vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
+		-- 		vim.keymap.set("n", "<leader>sW", function()
+		-- 			builtin.grep_string({ additional_args = { "--hidden", "--no-ignore" } })
+		-- 		end, { desc = "[S]earch current [W]ord with hidden files" })
+		-- 		vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
+		-- 		vim.keymap.set("n", "<leader>sG", function()
+		-- 			builtin.live_grep({ additional_args = { "--hidden", "--no-ignore" } })
+		-- 		end, { desc = "[S]earch by [G]rep with hidden files" })
+		-- 		vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
+		-- 		vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
+		-- 		vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+		--
+		-- 		-- Slightly advanced example of overriding default behavior and theme
+		-- 		vim.keymap.set("n", "<leader>/", function()
+		-- 			-- You can pass additional configuration to Telescope to change the theme, layout, etc.
+		-- 			builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+		-- 				winblend = 10,
+		-- 				previewer = false,
+		-- 			}))
+		-- 		end, { desc = "[/] Fuzzily search in current buffer" })
+		--
+		-- 		-- It's also possible to pass additional configuration options.
+		-- 		--  See `:help telescope.builtin.live_grep()` for information about particular keys
+		-- 		vim.keymap.set("n", "<leader>s/", function()
+		-- 			builtin.live_grep({
+		-- 				grep_open_files = true,
+		-- 				prompt_title = "Live Grep in Open Files",
+		-- 			})
+		-- 		end, { desc = "[S]earch [/] in Open Files" })
+		--
+		-- 		-- Shortcut for searching your Neovim configuration files
+		-- 		vim.keymap.set("n", "<leader>sn", function()
+		-- 			builtin.find_files({ cwd = vim.fn.stdpath("config") })
+		-- 		end, { desc = "[S]earch [N]eovim files" })
+		-- 	end,
+		-- },
 		-- LSP Plugins
 		{
 			-- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -312,9 +308,6 @@ require("lazy").setup({
 			-- Main LSP Configuration
 			"neovim/nvim-lspconfig",
 			dependencies = {
-				-- Automatically install LSPs and related tools to stdpath for Neovim
-				-- Mason must be loaded before its dependents so we need to set it up here.
-				-- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
 				{ "williamboman/mason.nvim", opts = {} },
 				"williamboman/mason-lspconfig.nvim",
 				"WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -324,6 +317,7 @@ require("lazy").setup({
 
 				-- Allows extra capabilities provided by nvim-cmp
 				"hrsh7th/cmp-nvim-lsp",
+				-- "saghen/blink.cmp",
 			},
 			config = function()
 				--  This function gets run when an LSP attaches to a particular buffer.
@@ -333,11 +327,6 @@ require("lazy").setup({
 				vim.api.nvim_create_autocmd("LspAttach", {
 					group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 					callback = function(event)
-						-- NOTE: Remember that Lua is a real programming language, and as such it is possible
-						-- to define small helper and utility functions so you don't have to repeat yourself.
-						--
-						-- In this case, we create a function that lets us more easily define mappings specific
-						-- for LSP related items. It sets the mode, buffer and description for us each time.
 						local map = function(keys, func, desc, mode)
 							mode = mode or "n"
 							vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
@@ -346,31 +335,31 @@ require("lazy").setup({
 						-- Jump to the definition of the word under your cursor.
 						--  This is where a variable was first declared, or where a function is defined, etc.
 						--  To jump back, press <C-t>.
-						map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+						-- map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
 
 						-- Find references for the word under your cursor.
-						map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+						-- map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
 
 						-- Jump to the implementation of the word under your cursor.
 						--  Useful when your language has ways of declaring types without an actual implementation.
-						map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+						-- map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
 
 						-- Jump to the type of the word under your cursor.
 						--  Useful when you're not sure what type a variable is and you want to see
 						--  the definition of its *type*, not where it was *defined*.
-						map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
+						-- map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
 
 						-- Fuzzy find all the symbols in your current document.
 						--  Symbols are things like variables, functions, types, etc.
-						map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+						-- map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
 
 						-- Fuzzy find all the symbols in your current workspace.
 						--  Similar to document symbols, except searches over your entire project.
-						map(
-							"<leader>ws",
-							require("telescope.builtin").lsp_dynamic_workspace_symbols,
-							"[W]orkspace [S]ymbols"
-						)
+						-- map(
+						-- 	"<leader>ws",
+						-- 	require("telescope.builtin").lsp_dynamic_workspace_symbols,
+						-- 	"[W]orkspace [S]ymbols"
+						-- )
 
 						-- Rename the variable under your cursor.
 						--  Most Language Servers support renaming across files, etc.
@@ -459,7 +448,15 @@ require("lazy").setup({
 				--  - settings (table): Override the default settings passed when initializing the server.
 				--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 				local servers = {
-					twiggy_language_server = {},
+					twiggy_language_server = {
+						-- settings = {
+						-- 	twiggy = {
+						-- 		framework = "symfony",
+						-- 		phpExecutable = "php",
+						-- 		symfonyConsolePath = "bin/console",
+						-- 	},
+						-- },
+					},
 					phpactor = {},
 					ts_ls = {},
 					lua_ls = {
@@ -490,7 +487,7 @@ require("lazy").setup({
 				vim.list_extend(ensure_installed, {
 					"stylua", -- Used to format Lua code
 					"php-cs-fixer",
-					"stylelint",
+					-- "stylelint",
 				})
 				require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -534,32 +531,32 @@ require("lazy").setup({
 			cmd = { "ConformInfo" },
 			keys = {
 				{
-					"<leader>f",
+					"<leader>cf",
 					function()
 						require("conform").format({ async = true, lsp_format = "fallback" })
 					end,
 					mode = "",
-					desc = "[F]ormat buffer",
+					desc = "[C]ode [F]ormat buffer",
 				},
 			},
 			opts = {
 				notify_on_error = false,
-				format_on_save = function(bufnr)
-					-- Disable "format_on_save lsp_fallback" for languages that don't
-					-- have a well standardized coding style. You can add additional
-					-- languages here or re-enable it for the disabled ones.
-					local disable_filetypes = { c = true, cpp = true }
-					local lsp_format_opt
-					if disable_filetypes[vim.bo[bufnr].filetype] then
-						lsp_format_opt = "never"
-					else
-						lsp_format_opt = "fallback"
-					end
-					return {
-						timeout_ms = 500,
-						lsp_format = lsp_format_opt,
-					}
-				end,
+				-- format_on_save = function(bufnr)
+				-- 	-- Disable "format_on_save lsp_fallback" for languages that don't
+				-- 	-- have a well standardized coding style. You can add additional
+				-- 	-- languages here or re-enable it for the disabled ones.
+				-- 	local disable_filetypes = { c = true, cpp = true }
+				-- 	local lsp_format_opt
+				-- 	if disable_filetypes[vim.bo[bufnr].filetype] then
+				-- 		lsp_format_opt = "never"
+				-- 	else
+				-- 		lsp_format_opt = "fallback"
+				-- 	end
+				-- 	return {
+				-- 		timeout_ms = 500,
+				-- 		lsp_format = lsp_format_opt,
+				-- 	}
+				-- end,
 				formatters_by_ft = {
 					lua = { "stylua" },
 					-- Conform can also run multiple formatters sequentially
@@ -570,7 +567,21 @@ require("lazy").setup({
 				},
 			},
 		},
-
+		-- {
+		--   'saghen/blink.cmp',
+		--   version = '*',
+		--   opts = {
+		--     keymap = { preset = 'default' },
+		--     appearance = {
+		--       use_nvim_cmp_as_default = true,
+		--       nerd_font_variant = 'mono'
+		--     },
+		--     sources = {
+		--       default = { 'lsp', 'path', 'snippets', 'buffer' },
+		--     },
+		--   },
+		--   opts_extend = { "sources.default" }
+		-- }
 		{ -- Autocompletion
 			"hrsh7th/nvim-cmp",
 			event = "InsertEnter",
@@ -697,18 +708,16 @@ require("lazy").setup({
 				-- vim.cmd.hi("Comment gui=none")
 			end,
 		},
-
-		-- Highlight todo, notes, etc in comments
-		{
+		{ -- Highlight todo, notes, etc in comments
 			"folke/todo-comments.nvim",
 			event = "VimEnter",
 			dependencies = { "nvim-lua/plenary.nvim" },
 			opts = { signs = false },
 		},
-
 		{ -- Collection of various small independent plugins/modules
 			"echasnovski/mini.nvim",
 			version = false,
+			dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
 			config = function()
 				-- Better Around/Inside textobjects
 				--
@@ -724,7 +733,17 @@ require("lazy").setup({
 				-- - sd'   - [S]urround [D]elete [']quotes
 				-- - sr)'  - [S]urround [R]eplace [)] [']
 				require("mini.surround").setup()
-				require("mini.comment").setup()
+				require("mini.comment").setup({
+					options = {
+						custom_commentstring = function()
+							if vim.bo.filetype == "twig" then
+								return "{# %s #}"
+							end
+							return require("ts_context_commentstring.internal").calculate_commentstring()
+								or vim.bo.commentstring
+						end,
+					},
+				})
 				require("mini.icons").setup()
 				require("mini.indentscope").setup()
 				-- ... and there is more!
@@ -788,30 +807,30 @@ require("lazy").setup({
 				},
 			},
 		},
-		{ -- file explorer
-			"nvim-neo-tree/neo-tree.nvim",
-			branch = "v3.x",
-			dependencies = {
-				"nvim-lua/plenary.nvim",
-				"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-				"MunifTanjim/nui.nvim",
-				-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-			},
-			opts = function(_, opts)
-				-- LSP refactor on file rename
-				local function on_move(data)
-					Snacks.rename.on_rename_file(data.source, data.destination)
-				end
-				local events = require("neo-tree.events")
-				opts.event_handlers = opts.event_handlers or {}
-				vim.list_extend(opts.event_handlers, {
-					{ event = events.FILE_MOVED, handler = on_move },
-					{ event = events.FILE_RENAMED, handler = on_move },
-				})
-				-- end LSP refactor
-				vim.keymap.set("n", "<leader>n", "<cmd>Neotree filesystem reveal<CR>", { desc = "Open [N]eotree" })
-			end,
-		},
+		-- { -- file explorer
+		-- 	"nvim-neo-tree/neo-tree.nvim",
+		-- 	branch = "v3.x",
+		-- 	dependencies = {
+		-- 		"nvim-lua/plenary.nvim",
+		-- 		"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+		-- 		"MunifTanjim/nui.nvim",
+		-- 		-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+		-- 	},
+		-- 	opts = function(_, opts)
+		-- 		-- LSP refactor on file rename
+		-- 		local function on_move(data)
+		-- 			Snacks.rename.on_rename_file(data.source, data.destination)
+		-- 		end
+		-- 		local events = require("neo-tree.events")
+		-- 		opts.event_handlers = opts.event_handlers or {}
+		-- 		vim.list_extend(opts.event_handlers, {
+		-- 			{ event = events.FILE_MOVED, handler = on_move },
+		-- 			{ event = events.FILE_RENAMED, handler = on_move },
+		-- 		})
+		-- 		-- end LSP refactor
+		-- 		vim.keymap.set("n", "<leader>n", "<cmd>Neotree filesystem reveal<CR>", { desc = "Open [N]eotree" })
+		-- 	end,
+		-- },
 		{
 			"folke/snacks.nvim",
 			priority = 1000,
@@ -820,9 +839,18 @@ require("lazy").setup({
 				lazygit = {},
 				quickfile = {},
 				rename = {},
+				picker = {
+					sources = {
+						explorer = {
+							replace_netrw = true,
+						},
+					},
+				},
+				explorer = {},
 				notifier = { timeout = 3000 },
 			},
 			keys = {
+				-- lazygit
 				{
 					"<leader>lg",
 					function()
@@ -831,26 +859,161 @@ require("lazy").setup({
 					desc = "Lazygit",
 				},
 				{
-					"<leader>gb",
-					function()
-						Snacks.git.blame_line()
-					end,
-					desc = "Git Blame Line",
-				},
-				{
-					"<leader>gB",
-					function()
-						Snacks.gitbrowse()
-					end,
-					desc = "Git Browse",
-				},
-				{
 					"<leader>gf",
 					function()
 						Snacks.lazygit.log_file()
 					end,
 					desc = "Lazygit Current File History",
 				},
+				-- git
+				{
+					"<leader>gb",
+					function()
+						Snacks.git.blame_line()
+					end,
+					desc = "Git Blame Line",
+				},
+				-- picker
+				{
+					"<leader>sg",
+					function()
+						Snacks.picker.grep()
+					end,
+					desc = "Grep",
+				},
+				{
+					"<leader>sG",
+					function()
+						Snacks.picker.grep({ hidden = true, ignored = true })
+					end,
+					desc = "Grep",
+				},
+				{
+					"<leader>:",
+					function()
+						Snacks.picker.command_history()
+					end,
+					desc = "Command History",
+				},
+				{
+					"<leader>n",
+					function()
+						Snacks.explorer()
+					end,
+					desc = "File Explorer",
+				},
+				{
+					"<leader>sf",
+					function()
+						Snacks.picker.files()
+					end,
+					desc = "Find Files",
+				},
+				{
+					"<leader>sF",
+					function()
+						Snacks.picker.files({ hidden = true, ignored = true })
+					end,
+					desc = "Find Files",
+				},
+				{
+					"<leader>s.",
+					function()
+						Snacks.picker.recent()
+					end,
+					desc = "Recent files",
+				},
+				{
+					"<leader>sw",
+					function()
+						Snacks.picker.grep_word()
+					end,
+					desc = "Visual selection or word",
+					mode = { "n", "x" },
+				},
+				{
+					"<leader>sW",
+					function()
+						Snacks.picker.grep_word({ hidden = true, ignored = true })
+					end,
+					desc = "Visual selection or word",
+					mode = { "n", "x" },
+				},
+				-- search
+				{
+					'<leader>s"',
+					function()
+						Snacks.picker.registers()
+					end,
+					desc = "Registers",
+				},
+				{
+					"<leader>sh",
+					function()
+						Snacks.picker.help()
+					end,
+					desc = "Help Pages",
+				},
+				{
+					"<leader>si",
+					function()
+						Snacks.picker.icons()
+					end,
+					desc = "Icons",
+				},
+				{
+					"<leader>sk",
+					function()
+						Snacks.picker.keymaps()
+					end,
+					desc = "Keymaps",
+				},
+				{
+					"<leader>sr",
+					function()
+						Snacks.picker.resume()
+					end,
+					desc = "Resume",
+				},
+				-- LSP
+				{
+					"gd",
+					function()
+						Snacks.picker.lsp_definitions()
+					end,
+					desc = "Goto Definition",
+				},
+				{
+					"gD",
+					function()
+						Snacks.picker.lsp_declarations()
+					end,
+					desc = "Goto Declaration",
+				},
+				{
+					"gr",
+					function()
+						Snacks.picker.lsp_references()
+					end,
+					nowait = true,
+					desc = "References",
+				},
+				{
+					"gI",
+					function()
+						Snacks.picker.lsp_implementations()
+					end,
+					desc = "Goto Implementation",
+				},
+				{
+					"gy",
+					function()
+						Snacks.picker.lsp_type_definitions()
+					end,
+					desc = "Goto T[y]pe Definition",
+				},
+				-- { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
+				-- { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
 			},
 		},
 		-- { -- splits navigation & management
