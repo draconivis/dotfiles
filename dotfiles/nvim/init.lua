@@ -26,7 +26,10 @@ vim.opt.showmode = false
 vim.opt.clipboard = "unnamedplus"
 
 -- Enable break indent
-vim.opt.breakindent = true
+vim.opt.breakindent = false
+
+-- disable line breaks
+vim.opt.wrap = false
 
 -- Save undo history
 vim.opt.undofile = true
@@ -109,6 +112,66 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	end
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
+
+local function getHeaderArt()
+	local headerArts = {
+		[[
+  ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆         
+   ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦      
+         ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄    
+          ⣸⣿⣿⢧ ⢻⠻⣿⣿⣷⣄⣀⠄⠢⣀⡀⠈⠙⠿⠄   
+         ⢠⣿⣿⣿⠈    ⣻⣿⣿⣿⣿⣿⣿⣿⣛⣳⣤⣀⣀  
+  ⢠⣧⣶⣥⡤⢄ ⣸⣿⣿⠘  ⢀⣴⣿⣿⡿⠛⣿⣿⣧⠈⢿⠿⠟⠛⠻⠿⠄ 
+ ⣰⣿⣿⠛⠻⣿⣿⡦⢹⣿⣷   ⢊⣿⣿⡏  ⢸⣿⣿⡇ ⢀⣠⣄⣾⠄  
+⣠⣿⠿⠛ ⢀⣿⣿⣷⠘⢿⣿⣦⡀ ⢸⢿⣿⣿⣄ ⣸⣿⣿⡇⣪⣿⡿⠿⣿⣷⡄ 
+⠙⠃   ⣼⣿⡟  ⠈⠻⣿⣿⣦⣌⡇⠻⣿⣿⣷⣿⣿⣿ ⣿⣿⡇ ⠛⠻⢷⣄
+     ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆    
+      ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃    ]],
+
+		[[
+ ██████   █████                   █████   █████  ███                 
+░░██████ ░░███                   ░░███   ░░███  ░░░                  
+ ░███░███ ░███   ██████   ██████  ░███    ░███  ████  █████████████  
+ ░███░░███░███  ███░░███ ███░░███ ░███    ░███ ░░███ ░░███░░███░░███ 
+ ░███ ░░██████ ░███████ ░███ ░███ ░░███   ███   ░███  ░███ ░███ ░███ 
+ ░███  ░░█████ ░███░░░  ░███ ░███  ░░░█████░    ░███  ░███ ░███ ░███ 
+ █████  ░░█████░░██████ ░░██████     ░░███      █████ █████░███ █████
+░░░░░    ░░░░░  ░░░░░░   ░░░░░░       ░░░      ░░░░░ ░░░░░ ░░░ ░░░░░ ]],
+
+		[[
+     ___           ___           ___           ___                       ___     
+    /\__\         /\  \         /\  \         /\__\          ___        /\__\    
+   /::|  |       /::\  \       /::\  \       /:/  /         /\  \      /::|  |   
+  /:|:|  |      /:/\:\  \     /:/\:\  \     /:/  /          \:\  \    /:|:|  |   
+ /:/|:|  |__   /::\~\:\  \   /:/  \:\  \   /:/__/  ___      /::\__\  /:/|:|__|__ 
+/:/ |:| /\__\ /:/\:\ \:\__\ /:/__/ \:\__\  |:|  | /\__\  __/:/\/__/ /:/ |::::\__\
+\/__|:|/:/  / \:\~\:\ \/__/ \:\  \ /:/  /  |:|  |/:/  / /\/:/  /    \/__/~~/:/  /
+    |:/:/  /   \:\ \:\__\    \:\  /:/  /   |:|__/:/  /  \::/__/           /:/  / 
+    |::/  /     \:\ \/__/     \:\/:/  /     \::::/__/    \:\__\          /:/  /  
+    /:/  /       \:\__\        \::/  /       ~~~~         \/__/         /:/  /   
+    \/__/         \/__/         \/__/                                   \/__/    ]],
+
+		[[
+                                                                   
+      ████ ██████           █████      ██                    
+     ███████████             █████                            
+     █████████ ███████████████████ ███   ███████████  
+    █████████  ███    █████████████ █████ ██████████████  
+   █████████ ██████████ █████████ █████ █████ ████ █████  
+ ███████████ ███    ███ █████████ █████ █████ ████ █████ 
+██████  █████████████████████ ████ █████ █████ ████ ██████]],
+
+		[[
+██╗   ██╗███████╗ ██████╗ ██████╗ ██████╗ ███████╗
+██║   ██║██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔════╝
+██║   ██║███████╗██║     ██║   ██║██║  ██║█████╗  
+╚██╗ ██╔╝╚════██║██║     ██║   ██║██║  ██║██╔══╝  
+ ╚████╔╝ ███████║╚██████╗╚██████╔╝██████╔╝███████╗
+  ╚═══╝  ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝]],
+	}
+	math.randomseed(os.time())
+	return headerArts[math.random(#headerArts)]
+end
 
 -- [[ Configure and install plugins ]]
 require("lazy").setup({
@@ -701,6 +764,7 @@ require("lazy").setup({
 		},
 		{
 			"catppuccin/nvim",
+			name = "catppuccin",
 			priority = 1000, -- Make sure to load this before all the other start plugins.
 			init = function()
 				vim.cmd.colorscheme("catppuccin-latte")
@@ -788,14 +852,14 @@ require("lazy").setup({
 			--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
 			--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 		},
-		{ -- startup dashboard
-			"goolord/alpha-nvim",
-			dependencies = { "nvim-tree/nvim-web-devicons" },
-			config = function()
-				--require'alpha'.setup(require'alpha.themes.dashboard'.config)
-				require("alpha").setup(require("alphaConf").config)
-			end,
-		},
+		-- { -- startup dashboard
+		-- 	"goolord/alpha-nvim",
+		-- 	dependencies = { "nvim-tree/nvim-web-devicons" },
+		-- 	config = function()
+		-- 		--require'alpha'.setup(require'alpha.themes.dashboard'.config)
+		-- 		require("alpha").setup(require("alphaConf").config)
+		-- 	end,
+		-- },
 		{ -- Set lualine as statusline
 			"nvim-lualine/lualine.nvim",
 			opts = {
@@ -836,18 +900,21 @@ require("lazy").setup({
 			priority = 1000,
 			lazy = false,
 			opts = {
-				lazygit = {},
-				quickfile = {},
-				rename = {},
-				picker = {
-					sources = {
-						explorer = {
-							replace_netrw = true,
-						},
+				dashboard = {
+					preset = { header = getHeaderArt() },
+					sections = {
+						{ section = "header" },
+						{ icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+            { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
+						{ section = "startup" },
 					},
 				},
 				explorer = {},
+				lazygit = {},
 				notifier = { timeout = 3000 },
+				picker = { sources = { explorer = { replace_netrw = true } } },
+				quickfile = {},
+				rename = {},
 			},
 			keys = {
 				-- lazygit

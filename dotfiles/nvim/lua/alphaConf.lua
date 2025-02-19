@@ -223,6 +223,8 @@ local headerArts = {
 	},
 }
 
+math.randomseed(os.time())
+
 local header = {
 	type = "text",
 	val = headerArts[math.random(#headerArts)],
