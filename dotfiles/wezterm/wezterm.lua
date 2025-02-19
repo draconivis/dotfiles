@@ -4,7 +4,9 @@ local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabl
 local act = wezterm.action
 local config = wezterm.config_builder()
 
+config.max_fps = 120
 config.font_size = 15
+config.font = wezterm.font 'Maple Mono'
 config.color_scheme = "Catppuccin Latte"
 config.tab_bar_at_bottom = true
 config.window_padding = {
@@ -19,37 +21,39 @@ config.disable_default_key_bindings = true
 config.send_composed_key_when_left_alt_is_pressed = true
 config.keys = {
 	-- wezterm controls
-	{ key = "r",          mods = "CTRL|SHIFT", action = act.ReloadConfiguration },
-	{ key = "s",          mods = "LEADER",     action = workspace_switcher.switch_workspace() },
-	{ key = "-",          mods = "CTRL",       action = act.DecreaseFontSize },
-	{ key = "=",          mods = "CTRL",       action = act.IncreaseFontSize },
-	{ key = "0",          mods = "CTRL",       action = act.ResetFontSize },
-	{ key = "[",          mods = "LEADER",     action = act.ActivateCopyMode },
-	{ key = "V",          mods = "CTRL",       action = act.PasteFrom("Clipboard") },
-	{ key = "a",          mods = "LEADER",     action = act.SwitchToWorkspace { name = 'default' } },
+	{ key = "r", mods = "CTRL|SHIFT", action = act.ReloadConfiguration },
+	{ key = 'l', mods = 'CTRL|SHIFT', action = wezterm.action.ShowDebugOverlay },
+	-- { key = "u", mods = "CTRL|SHIFT", action = wezterm.plugin.update_all() },
+	{ key = "s", mods = "LEADER", action = workspace_switcher.switch_workspace() },
+	{ key = "-", mods = "CTRL", action = act.DecreaseFontSize },
+	{ key = "=", mods = "CTRL", action = act.IncreaseFontSize },
+	{ key = "0", mods = "CTRL", action = act.ResetFontSize },
+	{ key = "[", mods = "LEADER", action = act.ActivateCopyMode },
+	{ key = "V", mods = "CTRL", action = act.PasteFrom("Clipboard") },
+	{ key = "a", mods = "LEADER", action = act.SwitchToWorkspace({ name = "default" }) },
 
 	-- tab controls
 	--- create new tab
-	{ key = "c",          mods = "ALT",        action = act.SpawnTab("CurrentPaneDomain") },
+	{ key = "c", mods = "ALT", action = act.SpawnTab("CurrentPaneDomain") },
 	--- switch to right tab
-	{ key = "n",          mods = "ALT",        action = act.ActivateTabRelative(1) },
-	{ key = "RightArrow", mods = "ALT",        action = act.ActivateTabRelative(1) },
+	{ key = "n", mods = "ALT", action = act.ActivateTabRelative(1) },
+	{ key = "RightArrow", mods = "ALT", action = act.ActivateTabRelative(1) },
 	--- switch to left tab
-	{ key = "p",          mods = "ALT",        action = act.ActivateTabRelative(-1) },
-	{ key = "LeftArrow",  mods = "ALT",        action = act.ActivateTabRelative(-1) },
+	{ key = "p", mods = "ALT", action = act.ActivateTabRelative(-1) },
+	{ key = "LeftArrow", mods = "ALT", action = act.ActivateTabRelative(-1) },
 	--- switch to last active tab
 	-- { key = "a",          mods = "ALT",        action = act.ActivateLastTab },
 	--- move tab right
-	{ key = ">",          mods = "ALT|SHIFT",  action = act.MoveTabRelative(1) },
-	{ key = "RightArrow", mods = "ALT|SHIFT",  action = act.MoveTabRelative(1) },
+	{ key = ">", mods = "ALT|SHIFT", action = act.MoveTabRelative(1) },
+	{ key = "RightArrow", mods = "ALT|SHIFT", action = act.MoveTabRelative(1) },
 	--- move tab left
-	{ key = "<",          mods = "ALT|SHIFT",  action = act.MoveTabRelative(-1) },
-	{ key = "LeftArrow",  mods = "ALT|SHIFT",  action = act.MoveTabRelative(-1) },
+	{ key = "<", mods = "ALT|SHIFT", action = act.MoveTabRelative(-1) },
+	{ key = "LeftArrow", mods = "ALT|SHIFT", action = act.MoveTabRelative(-1) },
 
 	-- pane controls
 	--- splitting
-	{ key = "|",          mods = "ALT|SHIFT",  action = act.SplitHorizontal },
-	{ key = '"',          mods = "ALT|SHIFT",  action = act.SplitVertical },
+	{ key = "|", mods = "ALT|SHIFT", action = act.SplitHorizontal },
+	{ key = '"', mods = "ALT|SHIFT", action = act.SplitVertical },
 	--- closing
 	{
 		key = "w",
@@ -63,21 +67,21 @@ config.keys = {
 		action = act.ActivateKeyTable({ name = "resize_pane", one_shot = false }),
 	},
 	--- rotating
-	{ key = "q",          mods = "ALT",      action = act.RotatePanes("Clockwise") },
+	{ key = "q", mods = "ALT", action = act.RotatePanes("Clockwise") },
 	--- switch active pane
-	{ key = "LeftArrow",  mods = "CTRL|ALT", action = act.ActivatePaneDirection("Left") },
-	{ key = "h",          mods = "CTRL|ALT", action = act.ActivatePaneDirection("Left") },
-	{ key = "DownArrow",  mods = "CTRL|ALT", action = act.ActivatePaneDirection("Down") },
-	{ key = "j",          mods = "CTRL|ALT", action = act.ActivatePaneDirection("Down") },
-	{ key = "UpArrow",    mods = "CTRL|ALT", action = act.ActivatePaneDirection("Up") },
-	{ key = "k",          mods = "CTRL|ALT", action = act.ActivatePaneDirection("Up") },
+	{ key = "LeftArrow", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Left") },
+	{ key = "h", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Left") },
+	{ key = "DownArrow", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Down") },
+	{ key = "j", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Down") },
+	{ key = "UpArrow", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Up") },
+	{ key = "k", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Up") },
 	{ key = "RightArrow", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Right") },
-	{ key = "l",          mods = "CTRL|ALT", action = act.ActivatePaneDirection("Right") },
+	{ key = "l", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Right") },
 	--- scrollback
-	{ key = "UpArrow",    mods = "ALT",      action = act.ScrollByPage(-0.6) },
-	{ key = "DownArrow",  mods = "ALT",      action = act.ScrollByPage(0.6) },
+	{ key = "UpArrow", mods = "ALT", action = act.ScrollByPage(-0.6) },
+	{ key = "DownArrow", mods = "ALT", action = act.ScrollByPage(0.6) },
 	--- search in scrollback
-	{ key = "/",          mods = "ALT",      action = act.Search({ CaseInSensitiveString = "" }) },
+	{ key = "/", mods = "ALT", action = act.Search({ CaseInSensitiveString = "" }) },
 }
 
 for i = 1, 9 do
@@ -94,24 +98,24 @@ config.key_tables = {
 	-- 'resize_pane' here corresponds to the name="resize_pane" in
 	-- the key assignments above.
 	resize_pane = {
-		{ key = "LeftArrow",  action = act.AdjustPaneSize({ "Left", 1 }) },
-		{ key = "h",          action = act.AdjustPaneSize({ "Left", 1 }) },
-		{ key = "DownArrow",  action = act.AdjustPaneSize({ "Down", 1 }) },
-		{ key = "j",          action = act.AdjustPaneSize({ "Down", 1 }) },
-		{ key = "UpArrow",    action = act.AdjustPaneSize({ "Up", 1 }) },
-		{ key = "k",          action = act.AdjustPaneSize({ "Up", 1 }) },
+		{ key = "LeftArrow", action = act.AdjustPaneSize({ "Left", 1 }) },
+		{ key = "h", action = act.AdjustPaneSize({ "Left", 1 }) },
+		{ key = "DownArrow", action = act.AdjustPaneSize({ "Down", 1 }) },
+		{ key = "j", action = act.AdjustPaneSize({ "Down", 1 }) },
+		{ key = "UpArrow", action = act.AdjustPaneSize({ "Up", 1 }) },
+		{ key = "k", action = act.AdjustPaneSize({ "Up", 1 }) },
 		{ key = "RightArrow", action = act.AdjustPaneSize({ "Right", 1 }) },
-		{ key = "l",          action = act.AdjustPaneSize({ "Right", 1 }) },
+		{ key = "l", action = act.AdjustPaneSize({ "Right", 1 }) },
 		-- Cancel the mode by pressing escape
-		{ key = "Escape",     action = "PopKeyTable" },
+		{ key = "Escape", action = "PopKeyTable" },
 	},
 	search_mode = {
-		{ key = "Enter",  mods = "NONE", action = act.CopyMode("PriorMatch") },
+		{ key = "Enter", mods = "NONE", action = act.CopyMode("PriorMatch") },
 		{ key = "Escape", mods = "NONE", action = act.CopyMode("Close") },
-		{ key = "n",      mods = "CTRL", action = act.CopyMode("NextMatch") },
-		{ key = "p",      mods = "CTRL", action = act.CopyMode("PriorMatch") },
-		{ key = "r",      mods = "CTRL", action = act.CopyMode("CycleMatchType") },
-		{ key = "u",      mods = "CTRL", action = act.CopyMode("ClearPattern") },
+		{ key = "n", mods = "CTRL", action = act.CopyMode("NextMatch") },
+		{ key = "p", mods = "CTRL", action = act.CopyMode("PriorMatch") },
+		{ key = "r", mods = "CTRL", action = act.CopyMode("CycleMatchType") },
+		{ key = "u", mods = "CTRL", action = act.CopyMode("ClearPattern") },
 	},
 }
 
@@ -143,7 +147,7 @@ tabline.setup({
 		tabline_z = { "workspace" },
 	},
 	extensions = {
-		'smart_workspace_switcher'
+		"smart_workspace_switcher",
 	},
 })
 
