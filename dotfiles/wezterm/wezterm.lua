@@ -30,6 +30,9 @@ config.keys = {
 	{ key = "0", mods = "CTRL", action = act.ResetFontSize },
 	{ key = "[", mods = "LEADER", action = act.ActivateCopyMode },
 	{ key = "V", mods = "CTRL", action = act.PasteFrom("Clipboard") },
+	{ key = "C", mods = "CTRL", action = act.PasteFrom("Clipboard") },
+	{ key = "v", mods = "CMD", action = act.PasteFrom("Clipboard") },
+	{ key = "c", mods = "CMD", action = act.CopyTo("Clipboard") },
 	{ key = "a", mods = "LEADER", action = act.SwitchToWorkspace({ name = "default" }) },
 
 	-- tab controls
