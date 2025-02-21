@@ -67,6 +67,10 @@ vim.diagnostic.config({ virtual_lines = true })
 vim.opt.rtp:append("/opt/homebrew/bin/fzf")
 
 -- [[ Basic Keymaps ]]
+vim.api.nvim_create_user_command("Wa", function()
+	vim.cmd("wa")
+end, {})
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 -- vim.opt.hlsearch = true // CHECK
@@ -905,7 +909,7 @@ require("lazy").setup({
 					sections = {
 						{ section = "header" },
 						{ icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-            { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
+						{ icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
 						{ section = "startup" },
 					},
 				},
