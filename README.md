@@ -3,6 +3,7 @@
 dotfiles & setup instructions
 
 ## linux
+
 ### packages
 
 the main packages i use everywhere are in [packages](./packages).
@@ -15,6 +16,7 @@ additional packages can be found in [addonPackages](./addonPackages).
 to install the packages, run [`install_arch_packages.sh`](./install_arch_packages.sh) on an arch install.
 
 the script accepts some options, these are:
+
 - b > base packages
 - g > gaming related packages
 - l > laptop related packages
@@ -23,6 +25,7 @@ the script accepts some options, these are:
 - p > printing packages
 
 e.g to install the base and laptop packages, run
+
 ```sh
 ./install_arch_packages.sh -b -l
 ```
@@ -50,6 +53,7 @@ additional info on the dotfiles can be found in their respective READMEs.
 - keyboard layout: eu (EurKey)
 
 put this in `/etc/X11/xorg.conf.d/00-keyboard.conf`:
+
 ```
 Section "InputClass"
         Identifier "system-keyboard"
@@ -58,6 +62,7 @@ Section "InputClass"
         Option "AutoRepeat" "175 10"
 EndSection
 ```
+
 notice that in the AutoRepeat line i put 10 instead of 100 because the unit here is Hz, so lower number = more repitions, see [here](https://wiki.archlinux.org/title/Xorg/Keyboard_configuration#Using_AutoRepeat_configuration_option)
 
 ##### caps remap
@@ -82,6 +87,7 @@ negative for the scroll direction and the higher the number, the more lines you 
 #### system beep - autostart
 
 to turn that annoying system beep off, you can:
+
 - run `rmmod pcspkr`
 - add `blacklist pcspkr` to `/etc/modprobe.d/nobeep.conf`
 - run `xset b off`
@@ -126,13 +132,29 @@ ristretto doesn't support webp by default, the package `webp-pixbuf-loader` adds
 #### keyboard setup
 
 run
+
 ```
 defaults write -g InitialKeyRepeat -int 10
 defaults write -g KeyRepeat -int 1
 ```
+
 and log out / in or restart to apply changes
 
 [website to test settings](https://mac-key-repeat.zaymon.dev/)
+
+#### shortcut to drag window
+
+to enable dragging a window with a shortcut (just like on linux), run
+
+```
+defaults write -g NSWindowShouldDragOnGesture -bool true
+```
+
+to disable
+
+```
+defaults delete -g NSWindowShouldDragOnGesture
+```
 
 #### nvm install
 
@@ -145,6 +167,7 @@ some apps that aren't installed with brew:
 - [autoraise](https://github.com/sbmpost/AutoRaise)
 
 ## git
+
 some gitconfig that you'd probably want to use:
 
 ```
@@ -173,6 +196,7 @@ some gitconfig that you'd probably want to use:
 [rerere]
     enabled = true
 ```
+
 # alternatives
 
 here are some alternatives to linux commands that may be better
