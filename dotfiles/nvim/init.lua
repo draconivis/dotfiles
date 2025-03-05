@@ -70,6 +70,9 @@ vim.opt.rtp:append("/opt/homebrew/bin/fzf")
 vim.api.nvim_create_user_command("Wa", function()
 	vim.cmd("wa")
 end, {})
+vim.api.nvim_create_user_command("Wqa", function()
+	vim.cmd("wqa")
+end, {})
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
@@ -94,6 +97,9 @@ vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left wind
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+
+-- remap tab to c-6
+vim.keymap.set("n", "<TAB>", "<C-^>", { desc = "Alternate buffers" })
 
 -- [[ Basic Autocommands ]]
 -- Highlight when yanking (copying) text
@@ -192,17 +198,22 @@ require("lazy").setup({
 					topdelete = { text = "‾" },
 					changedelete = { text = "~" },
 				},
+				on_attach = function(bufnr)
+					local gitsigns = require("gitsigns")
+					vim.keymap.set(
+						"n",
+						"<leader>gp",
+						gitsigns.preview_hunk,
+						{ buffer = bufnr, desc = "Preview git hunk" }
+					)
+					vim.keymap.set(
+						"n",
+						"<leader>gi",
+						gitsigns.preview_hunk_inline,
+						{ buffer = bufnr, desc = "Preview git hunk inline" }
+					)
+				end,
 			},
-			on_attach = function(bufnr)
-				local gitsigns = require("gitsigns")
-				vim.keymap.set("n", "<leader>gp", gitsigns.preview_hunk, { buffer = bufnr, desc = "Preview git hunk" })
-				vim.keymap.set(
-					"n",
-					"<leader>gi",
-					gitsigns.preview_hunk_inline,
-					{ buffer = bufnr, desc = "Preview git hunk inline" }
-				)
-			end,
 		},
 		{ -- Useful plugin to show you pending keybinds.
 			"folke/which-key.nvim",
@@ -384,7 +395,7 @@ require("lazy").setup({
 
 				-- Allows extra capabilities provided by nvim-cmp
 				"hrsh7th/cmp-nvim-lsp",
-				-- "saghen/blink.cmp",
+				"saghen/blink.cmp",
 			},
 			config = function()
 				--  This function gets run when an LSP attaches to a particular buffer.
@@ -916,7 +927,11 @@ require("lazy").setup({
 				explorer = {},
 				lazygit = {},
 				notifier = { timeout = 3000 },
-				picker = { sources = { explorer = { replace_netrw = true } } },
+				picker = {
+					sources = { explorer = { replace_netrw = true } },
+					formatters = { file = { truncate = 100 } },
+					layout = { width = 0.8, height = 0.9 },
+				},
 				quickfile = {},
 				rename = {},
 			},
