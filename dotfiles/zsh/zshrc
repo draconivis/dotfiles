@@ -57,7 +57,7 @@ eval "$(direnv hook zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 
 ## fzf
-eval "$(fzf --zsh)"
+source <(fzf --zsh)
 
 # autocompletion
 autoload -U compinit; compinit
