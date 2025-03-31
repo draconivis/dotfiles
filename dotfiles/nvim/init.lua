@@ -23,7 +23,9 @@ vim.opt.showmode = false
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.opt.clipboard = "unnamedplus"
+vim.schedule(function()
+	vim.opt.clipboard = "unnamedplus"
+end)
 
 -- Enable break indent
 vim.opt.breakindent = false
@@ -61,7 +63,15 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 --inline diagnostics
-vim.diagnostic.config({ virtual_lines = true })
+vim.diagnostic.config({
+	-- virtual_lines = true,
+	virtual_text = true,
+})
+
+-- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
+-- instead raise a dialog asking if you wish to save the current file(s)
+-- See `:help 'confirm'`
+vim.opt.confirm = true
 
 -- fzf
 vim.opt.rtp:append("/opt/homebrew/bin/fzf")
@@ -80,8 +90,8 @@ end, {})
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
+-- vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
+-- vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
@@ -272,103 +282,6 @@ require("lazy").setup({
 				},
 			},
 		},
-		-- { -- Fuzzy Finder (files, lsp, etc)
-		-- 	"nvim-telescope/telescope.nvim",
-		-- 	event = "VimEnter",
-		-- 	branch = "0.1.x",
-		-- 	dependencies = {
-		-- 		"nvim-lua/plenary.nvim",
-		-- 		{ -- If encountering errors, see telescope-fzf-native README for installation instructions
-		-- 			"nvim-telescope/telescope-fzf-native.nvim",
-		--
-		-- 			-- `build` is used to run some command when the plugin is installed/updated.
-		-- 			-- This is only run then, not every time Neovim starts up.
-		-- 			build = "make",
-		--
-		-- 			-- `cond` is a condition used to determine whether this plugin should be
-		-- 			-- installed and loaded.
-		-- 			cond = function()
-		-- 				return vim.fn.executable("make") == 1
-		-- 			end,
-		-- 		},
-		-- 		{ "nvim-telescope/telescope-ui-select.nvim" },
-		--
-		-- 		-- Useful for getting pretty icons, but requires a Nerd Font.
-		-- 		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
-		-- 	},
-		-- 	config = function()
-		-- 		-- Two important keymaps to use while in Telescope are:
-		-- 		--  - Insert mode: <c-/>
-		-- 		--  - Normal mode: ?
-		-- 		--
-		-- 		-- This opens a window that shows you all of the keymaps for the current
-		-- 		-- Telescope picker. This is really useful to discover what Telescope can
-		-- 		-- do as well as how to actually do it!
-		--
-		-- 		-- [[ Configure Telescope ]]
-		-- 		-- See `:help telescope` and `:help telescope.setup()`
-		-- 		require("telescope").setup({
-		-- 			defaults = {
-		-- 				layout_config = {
-		-- 					horizontal = { width = 0.9, height = 0.9, preview_width = 0.6 },
-		-- 				},
-		-- 			},
-		-- 			extensions = {
-		-- 				["ui-select"] = {
-		-- 					require("telescope.themes").get_dropdown(),
-		-- 				},
-		-- 			},
-		-- 		})
-		--
-		-- 		-- Enable Telescope extensions if they are installed
-		-- 		pcall(require("telescope").load_extension, "fzf")
-		-- 		pcall(require("telescope").load_extension, "ui-select")
-		--
-		-- 		-- See `:help telescope.builtin`
-		-- 		local builtin = require("telescope.builtin")
-		-- 		vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
-		-- 		vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
-		-- 		vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
-		-- 		vim.keymap.set("n", "<leader>sF", function()
-		-- 			builtin.find_files({ hidden = true, no_ignore = true })
-		-- 		end, { desc = "[S]earch [F]iles with hidden files" })
-		-- 		vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
-		-- 		vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
-		-- 		vim.keymap.set("n", "<leader>sW", function()
-		-- 			builtin.grep_string({ additional_args = { "--hidden", "--no-ignore" } })
-		-- 		end, { desc = "[S]earch current [W]ord with hidden files" })
-		-- 		vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
-		-- 		vim.keymap.set("n", "<leader>sG", function()
-		-- 			builtin.live_grep({ additional_args = { "--hidden", "--no-ignore" } })
-		-- 		end, { desc = "[S]earch by [G]rep with hidden files" })
-		-- 		vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
-		-- 		vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
-		-- 		vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-		--
-		-- 		-- Slightly advanced example of overriding default behavior and theme
-		-- 		vim.keymap.set("n", "<leader>/", function()
-		-- 			-- You can pass additional configuration to Telescope to change the theme, layout, etc.
-		-- 			builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-		-- 				winblend = 10,
-		-- 				previewer = false,
-		-- 			}))
-		-- 		end, { desc = "[/] Fuzzily search in current buffer" })
-		--
-		-- 		-- It's also possible to pass additional configuration options.
-		-- 		--  See `:help telescope.builtin.live_grep()` for information about particular keys
-		-- 		vim.keymap.set("n", "<leader>s/", function()
-		-- 			builtin.live_grep({
-		-- 				grep_open_files = true,
-		-- 				prompt_title = "Live Grep in Open Files",
-		-- 			})
-		-- 		end, { desc = "[S]earch [/] in Open Files" })
-		--
-		-- 		-- Shortcut for searching your Neovim configuration files
-		-- 		vim.keymap.set("n", "<leader>sn", function()
-		-- 			builtin.find_files({ cwd = vim.fn.stdpath("config") })
-		-- 		end, { desc = "[S]earch [N]eovim files" })
-		-- 	end,
-		-- },
 		-- LSP Plugins
 		{
 			-- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
@@ -395,7 +308,7 @@ require("lazy").setup({
 
 				-- Allows extra capabilities provided by nvim-cmp
 				"hrsh7th/cmp-nvim-lsp",
-				"saghen/blink.cmp",
+				-- "saghen/blink.cmp",
 			},
 			config = function()
 				--  This function gets run when an LSP attaches to a particular buffer.
@@ -409,35 +322,6 @@ require("lazy").setup({
 							mode = mode or "n"
 							vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 						end
-
-						-- Jump to the definition of the word under your cursor.
-						--  This is where a variable was first declared, or where a function is defined, etc.
-						--  To jump back, press <C-t>.
-						-- map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-
-						-- Find references for the word under your cursor.
-						-- map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-
-						-- Jump to the implementation of the word under your cursor.
-						--  Useful when your language has ways of declaring types without an actual implementation.
-						-- map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-
-						-- Jump to the type of the word under your cursor.
-						--  Useful when you're not sure what type a variable is and you want to see
-						--  the definition of its *type*, not where it was *defined*.
-						-- map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-
-						-- Fuzzy find all the symbols in your current document.
-						--  Symbols are things like variables, functions, types, etc.
-						-- map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-
-						-- Fuzzy find all the symbols in your current workspace.
-						--  Similar to document symbols, except searches over your entire project.
-						-- map(
-						-- 	"<leader>ws",
-						-- 	require("telescope.builtin").lsp_dynamic_workspace_symbols,
-						-- 	"[W]orkspace [S]ymbols"
-						-- )
 
 						-- Rename the variable under your cursor.
 						--  Most Language Servers support renaming across files, etc.
@@ -458,7 +342,11 @@ require("lazy").setup({
 						-- When you move your cursor, the highlights will be cleared (the second autocommand).
 						local client = vim.lsp.get_client_by_id(event.data.client_id)
 						if
-							client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight)
+							client
+							and client:supports_method(
+								vim.lsp.protocol.Methods.textDocument_documentHighlight,
+								event.buf
+							)
 						then
 							local highlight_augroup =
 								vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
@@ -490,7 +378,10 @@ require("lazy").setup({
 						-- code, if the language server you are using supports them
 						--
 						-- This may be unwanted, since they displace some of your code
-						if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+						if
+							client
+							and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf)
+						then
 							map("<leader>th", function()
 								vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
 							end, "[T]oggle Inlay [H]ints")
@@ -513,8 +404,8 @@ require("lazy").setup({
 				--  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
 				--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
 				local capabilities = vim.lsp.protocol.make_client_capabilities()
-				capabilities =
-					vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+				capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+				-- capabilities = require("blink-cmp").get_lsp_capabilities(capabilities)
 
 				-- Enable the following language servers
 				--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -570,6 +461,8 @@ require("lazy").setup({
 				require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 				require("mason-lspconfig").setup({
+					ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
+					automatic_installation = false,
 					handlers = {
 						function(server_name)
 							local server = servers[server_name] or {}
@@ -599,6 +492,8 @@ require("lazy").setup({
 			config = function()
 				require("mason").setup()
 				require("mason-null-ls").setup({
+					ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
+					automatic_installation = false,
 					handlers = {},
 				})
 			end,
@@ -645,21 +540,18 @@ require("lazy").setup({
 				},
 			},
 		},
-		-- {
-		--   'saghen/blink.cmp',
-		--   version = '*',
-		--   opts = {
-		--     keymap = { preset = 'default' },
-		--     appearance = {
-		--       use_nvim_cmp_as_default = true,
-		--       nerd_font_variant = 'mono'
-		--     },
-		--     sources = {
-		--       default = { 'lsp', 'path', 'snippets', 'buffer' },
-		--     },
-		--   },
-		--   opts_extend = { "sources.default" }
-		-- }
+		-- { -- Autocompletion
+		-- 	"saghen/blink.cmp",
+		-- 	version = "*",
+		-- 	opts = {
+		-- 		keymap = { preset = "default" },
+		-- 		appearance = {
+		-- 			use_nvim_cmp_as_default = true,
+		-- 			nerd_font_variant = "mono",
+		-- 		},
+		-- 	},
+		-- 	opts_extend = { "sources.default" },
+		-- },
 		{ -- Autocompletion
 			"hrsh7th/nvim-cmp",
 			event = "InsertEnter",
@@ -759,10 +651,14 @@ require("lazy").setup({
 							end
 						end, { "i", "s" }),
 
+						-- ["<A-y>"] = require('minuet').make_cmp_map(),
+
 						-- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
 						--    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
 					}),
 					sources = {
+						-- Include minuet as a source to enable autocompletion
+						-- { name = "minuet" },
 						{
 							name = "lazydev",
 							-- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
@@ -886,36 +782,13 @@ require("lazy").setup({
 				},
 			},
 		},
-		-- { -- file explorer
-		-- 	"nvim-neo-tree/neo-tree.nvim",
-		-- 	branch = "v3.x",
-		-- 	dependencies = {
-		-- 		"nvim-lua/plenary.nvim",
-		-- 		"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-		-- 		"MunifTanjim/nui.nvim",
-		-- 		-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-		-- 	},
-		-- 	opts = function(_, opts)
-		-- 		-- LSP refactor on file rename
-		-- 		local function on_move(data)
-		-- 			Snacks.rename.on_rename_file(data.source, data.destination)
-		-- 		end
-		-- 		local events = require("neo-tree.events")
-		-- 		opts.event_handlers = opts.event_handlers or {}
-		-- 		vim.list_extend(opts.event_handlers, {
-		-- 			{ event = events.FILE_MOVED, handler = on_move },
-		-- 			{ event = events.FILE_RENAMED, handler = on_move },
-		-- 		})
-		-- 		-- end LSP refactor
-		-- 		vim.keymap.set("n", "<leader>n", "<cmd>Neotree filesystem reveal<CR>", { desc = "Open [N]eotree" })
-		-- 	end,
-		-- },
 		{
 			"folke/snacks.nvim",
 			priority = 1000,
 			lazy = false,
 			opts = {
 				dashboard = {
+					enabled = true,
 					preset = { header = getHeaderArt() },
 					sections = {
 						{ section = "header" },
@@ -924,16 +797,17 @@ require("lazy").setup({
 						{ section = "startup" },
 					},
 				},
-				explorer = {},
-				lazygit = {},
-				notifier = { timeout = 3000 },
+				explorer = { enabled = true },
+				lazygit = { enabled = true },
+				notifier = { enabled = true, timeout = 3000 },
 				picker = {
+					enabled = true,
 					sources = { explorer = { replace_netrw = true } },
 					formatters = { file = { truncate = 100 } },
-					layout = { width = 0.8, height = 0.9 },
+					layout = { width = 0.95, height = 0.95 },
 				},
-				quickfile = {},
-				rename = {},
+				quickfile = { enabled = true },
+				rename = { enabled = true },
 			},
 			keys = {
 				-- lazygit
