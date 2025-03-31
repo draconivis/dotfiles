@@ -1,76 +1,76 @@
 {
   "schemes" : [
     {
-      "if" : {
-        "device" : {
-          "vendorID" : "0x25a7",
-          "category" : "mouse",
-          "productName" : "Xtrfy Wireless Receiver",
-          "productID" : "0xfa99"
+      "scrolling" : {
+        "reverse" : {
+          "vertical" : true
+        },
+        "acceleration" : {
+          "vertical" : 5,
+          "horizontal" : 1
+        },
+        "distance" : {
+          "vertical" : "auto",
+          "horizontal" : 5
+        },
+        "speed" : {
+          "horizontal" : 0,
+          "vertical" : 50
+        },
+        "modifiers" : {
+          "vertical" : {
+            "shift" : {
+              "scale" : 3,
+              "type" : "changeSpeed"
+            }
+          }
         }
       },
       "pointer" : {
         "acceleration" : 1,
         "disableAcceleration" : true
       },
-      "scrolling" : {
-        "distance" : {
-          "vertical" : "auto",
-          "horizontal" : 5
-        },
-        "speed" : {
-          "vertical" : 50,
-          "horizontal" : 0
-        },
-        "modifiers" : {
-          "vertical" : {
-            "shift" : {
-              "scale" : 3,
-              "type" : "changeSpeed"
-            }
-          }
-        },
-        "reverse" : {
-          "vertical" : true
-        },
-        "acceleration" : {
-          "horizontal" : 1,
-          "vertical" : 5
+      "if" : {
+        "device" : {
+          "vendorID" : "0x25a7",
+          "productName" : "Xtrfy Wireless Receiver",
+          "category" : "mouse",
+          "productID" : "0xfa99"
         }
       }
     },
     {
-      "if" : {
-        "device" : {
-          "productID" : "0xfa92",
-          "vendorID" : "0x25a7",
-          "category" : "mouse",
-          "productName" : "Xtrfy Wireless Mouse"
-        }
-      },
       "scrolling" : {
         "acceleration" : {
           "vertical" : 5
-        },
-        "modifiers" : {
-          "vertical" : {
-            "shift" : {
-              "scale" : 3,
-              "type" : "changeSpeed"
-            }
-          }
         },
         "reverse" : {
           "vertical" : true
         },
         "speed" : {
           "vertical" : 50
+        },
+        "modifiers" : {
+          "vertical" : {
+            "shift" : {
+              "scale" : 3,
+              "type" : "changeSpeed"
+            }
+          }
+        }
+      },
+      "if" : {
+        "device" : {
+          "productName" : "Xtrfy Wireless Mouse",
+          "category" : "mouse",
+          "vendorID" : "0x25a7",
+          "productID" : "0xfa92"
         }
       },
       "pointer" : {
-        "disableAcceleration" : true,
+        "acceleration" : 1,
         "speed" : 0.1069,
-        "acceleration" : 1
+        "disableAcceleration" : true
       }
     }
   ],
