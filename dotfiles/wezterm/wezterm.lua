@@ -3,11 +3,33 @@ local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/s
 local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 local act = wezterm.action
 local config = wezterm.config_builder()
+-- wezterm.gui is not available to the mux server, so take care to
+-- do something reasonable when this config is evaluated by the mux
+local function get_appearance()
+	if wezterm.gui then
+		return wezterm.gui.get_appearance()
+	end
+	return "Light"
+end
+
+local function scheme_for_appearance(appearance)
+	if appearance:find("Dark") then
+		-- return "Catppucin Macchiato"
+		-- return "flexoki-dark"
+		return "Rosé Pine (Gogh)"
+		-- return "Everforest Dark Medium (Gogh)"
+	else
+		-- return "Catppucin Latte"
+		-- return "flexoki-light"
+		return "Rosé Pine Dawn (Gogh)"
+		-- return "Everforest Light Medium (Gogh)"
+	end
+end
 
 config.max_fps = 120
 config.font_size = 15
-config.font = wezterm.font 'Maple Mono'
-config.color_scheme = "Catppuccin Latte"
+config.font = wezterm.font("Maple Mono")
+config.color_scheme = scheme_for_appearance(get_appearance())
 config.tab_bar_at_bottom = true
 config.window_padding = {
 	left = 0,
@@ -22,7 +44,7 @@ config.send_composed_key_when_left_alt_is_pressed = true
 config.keys = {
 	-- wezterm controls
 	{ key = "r", mods = "CTRL|SHIFT", action = act.ReloadConfiguration },
-	{ key = 'l', mods = 'CTRL|SHIFT', action = wezterm.action.ShowDebugOverlay },
+	{ key = "l", mods = "CTRL|SHIFT", action = wezterm.action.ShowDebugOverlay },
 	-- { key = "u", mods = "CTRL|SHIFT", action = wezterm.plugin.update_all() },
 	{ key = "s", mods = "LEADER", action = workspace_switcher.switch_workspace() },
 	{ key = "-", mods = "CTRL", action = act.DecreaseFontSize },
@@ -82,16 +104,18 @@ config.keys = {
 	{ key = "l", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Right") },
 	--- scrollback
 	{ key = "UpArrow", mods = "ALT", action = act.ScrollByPage(-0.6) },
+	{ key = "b", mods = "ALT", action = act.ScrollByPage(-0.6) },
 	{ key = "DownArrow", mods = "ALT", action = act.ScrollByPage(0.6) },
+	{ key = "f", mods = "ALT", action = act.ScrollByPage(0.6) },
 	--- search in scrollback
 	{ key = "/", mods = "ALT", action = act.Search({ CaseInSensitiveString = "" }) },
 }
 
-for i = 1, 9 do
-	-- pane controls, continued
-	table.insert(config.keys, { key = tostring(i), mods = "ALT", action = act.ActivateTab(i - 1) })
-	table.insert(config.keys, { key = tostring(i), mods = "ALT|CTRL", action = act.MoveTab(i - 1) })
-end
+-- for i = 1, 9 do
+-- 	-- pane controls, continued
+-- 	table.insert(config.keys, { key = tostring(i), mods = "ALT", action = act.ActivateTab(i - 1) })
+-- 	table.insert(config.keys, { key = tostring(i), mods = "ALT|CTRL", action = act.MoveTab(i - 1) })
+-- end
 
 config.key_tables = {
 	-- Defines the keys that are active in our resize-pane mode.
@@ -125,7 +149,7 @@ config.key_tables = {
 tabline.setup({
 	options = {
 		icons_enabled = true,
-		theme = "Catppuccin Latte",
+		theme = config.color_scheme,
 		section_separators = {
 			left = "",
 			right = "",
