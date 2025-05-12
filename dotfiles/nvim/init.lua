@@ -188,6 +188,16 @@ local function getHeaderArt()
 ╚██╗ ██╔╝╚════██║██║     ██║   ██║██║  ██║██╔══╝  
  ╚████╔╝ ███████║╚██████╗╚██████╔╝██████╔╝███████╗
   ╚═══╝  ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝]],
+		[[
+__/\\\________/\\\_____/\\\\\\\\\\\__________/\\\\\\\\\________/\\\________/\\\\\\\\\\\\_____/\\\\\\\\\\\\\\\_        
+ _\/\\\_______\/\\\___/\\\/////////\\\_____/\\\////////___/\\\_\/\\\__/\\\_\/\\\////////\\\__\/\\\///////////__       
+  _\//\\\______/\\\___\//\\\______\///____/\\\/___________\////\\\\\\\\\//__\/\\\______\//\\\_\/\\\_____________      
+   __\//\\\____/\\\_____\////\\\__________/\\\________________\////\\\//_____\/\\\_______\/\\\_\/\\\\\\\\\\\_____     
+    ___\//\\\__/\\\_________\////\\\______\/\\\_________________/\\\\\\\\\____\/\\\_______\/\\\_\/\\\///////______    
+     ____\//\\\/\\\_____________\////\\\___\//\\\_____________/\\\///\\\///\\\_\/\\\_______\/\\\_\/\\\_____________   
+      _____\//\\\\\_______/\\\______\//\\\___\///\\\__________\///__\/\\\_\///__\/\\\_______/\\\__\/\\\_____________  
+       ______\//\\\_______\///\\\\\\\\\\\/______\////\\\\\\\\\_______\///________\/\\\\\\\\\\\\/___\/\\\\\\\\\\\\\\\_ 
+        _______\///__________\///////////___________\/////////____________________\////////////_____\///////////////__]],
 	}
 	math.randomseed(os.time())
 	return headerArts[math.random(#headerArts)]
@@ -674,13 +684,20 @@ require("lazy").setup({
 			end,
 		},
 		{
-			"catppuccin/nvim",
-			name = "catppuccin",
-			priority = 1000, -- Make sure to load this before all the other start plugins.
-			init = function()
-				vim.cmd.colorscheme("catppuccin-latte")
-				-- You can configure highlights by doing something like:
-				-- vim.cmd.hi("Comment gui=none")
+			"rose-pine/neovim",
+			name = "rose-pine",
+			dependencies = {
+				"f-person/auto-dark-mode.nvim",
+			},
+			version = false,
+			lazy = false,
+			priority = 1000, -- make sure to load this before all the other start plugins
+			config = function()
+				require("auto-dark-mode").setup()
+
+				-- set background and colorscheme
+				-- vim.o.background = "light"
+				vim.cmd.colorscheme("rose-pine")
 			end,
 		},
 		{ -- Highlight todo, notes, etc in comments
