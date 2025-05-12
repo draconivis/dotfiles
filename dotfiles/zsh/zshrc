@@ -2,8 +2,8 @@
 export ZSH_HOME=$HOME/.config/zsh
 ## History
 HISTFILE=$HOME/.history
-HISTSIZE=5000
-SAVEHIST=5000
+HISTSIZE=50000
+SAVEHIST=50000
 HISTDUP=erase
 setopt appendhistory
 setopt sharehistory

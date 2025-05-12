@@ -34,10 +34,13 @@ function phpsw () {
 
 function bru () {
   brew update
-  brew outdated
-  read "ans?upgrade packages? [Y/n]"
-  case $ans in
-    N|n ) ;;
-    Y|y|* ) brew upgrade;;
-  esac
+  outdated=$(brew outdated)
+  echo $outdated
+  if [[ -n $outdated ]]; then
+    read "ans?upgrade packages? [Y/n]"
+    case $ans in
+      N|n ) ;;
+      Y|y|* ) brew upgrade;;
+    esac
+  fi
 }
