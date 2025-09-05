@@ -4,6 +4,233 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Caps Lock to Esc and Ctrl",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "left_control" }],
+                                "to_if_alone": [{ "key_code": "escape" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "available_since": "15.3.0",
+                        "description": "Map volume controls to fine volume controls (Option + Shift + Volume)",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "system.use_fkeys_as_standard_function_keys",
+                                        "type": "variable_unless",
+                                        "value": true
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f11",
+                                    "modifiers": { "optional": ["caps_lock"] }
+                                },
+                                "to": [
+                                    {
+                                        "consumer_key_code": "volume_decrement",
+                                        "modifiers": ["left_option", "left_shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "system.use_fkeys_as_standard_function_keys",
+                                        "type": "variable_unless",
+                                        "value": true
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f11",
+                                    "modifiers": {
+                                        "mandatory": ["option", "shift"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "consumer_key_code": "volume_decrement" }],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "system.use_fkeys_as_standard_function_keys",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f11",
+                                    "modifiers": {
+                                        "mandatory": ["fn"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "consumer_key_code": "volume_decrement",
+                                        "modifiers": ["left_option", "left_shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "system.use_fkeys_as_standard_function_keys",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f11",
+                                    "modifiers": {
+                                        "mandatory": ["option", "shift", "fn"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "consumer_key_code": "volume_decrement" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "consumer_key_code": "volume_decrement",
+                                    "modifiers": { "optional": ["caps_lock"] }
+                                },
+                                "to": [
+                                    {
+                                        "consumer_key_code": "volume_decrement",
+                                        "modifiers": ["left_option", "left_shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "consumer_key_code": "volume_decrement",
+                                    "modifiers": {
+                                        "mandatory": ["option", "shift"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "consumer_key_code": "volume_decrement" }],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "system.use_fkeys_as_standard_function_keys",
+                                        "type": "variable_unless",
+                                        "value": true
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f12",
+                                    "modifiers": { "optional": ["caps_lock"] }
+                                },
+                                "to": [
+                                    {
+                                        "consumer_key_code": "volume_increment",
+                                        "modifiers": ["left_option", "left_shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "system.use_fkeys_as_standard_function_keys",
+                                        "type": "variable_unless",
+                                        "value": true
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f12",
+                                    "modifiers": {
+                                        "mandatory": ["option", "shift"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "consumer_key_code": "volume_increment" }],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "system.use_fkeys_as_standard_function_keys",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f12",
+                                    "modifiers": {
+                                        "mandatory": ["fn"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "consumer_key_code": "volume_increment",
+                                        "modifiers": ["left_option", "left_shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "system.use_fkeys_as_standard_function_keys",
+                                        "type": "variable_if",
+                                        "value": true
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f12",
+                                    "modifiers": {
+                                        "mandatory": ["option", "shift", "fn"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "consumer_key_code": "volume_increment" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "consumer_key_code": "volume_increment",
+                                    "modifiers": { "optional": ["caps_lock"] }
+                                },
+                                "to": [
+                                    {
+                                        "consumer_key_code": "volume_increment",
+                                        "modifiers": ["left_option", "left_shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "consumer_key_code": "volume_increment",
+                                    "modifiers": {
+                                        "mandatory": ["option", "shift"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "consumer_key_code": "volume_increment" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "description": "Change caps_lock to Hyper (cmd+ctrl+option+shift) and Esc",
@@ -68,21 +295,6 @@
                                     }
                                 },
                                 "to": [{ "key_code": "right_arrow" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Caps Lock to Esc and Ctrl",
-                        "enabled": false,
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "caps_lock",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "key_code": "left_control" }],
-                                "to_if_alone": [{ "key_code": "escape" }],
                                 "type": "basic"
                             }
                         ]
