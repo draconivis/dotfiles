@@ -25,9 +25,10 @@ local function scheme_for_appearance(appearance)
 		-- return "Everforest Light Medium (Gogh)"
 	end
 end
-
+-- Spawn a fish shell in login mode
+config.default_prog = { '/opt/homebrew/bin/fish', '-l' }
 config.max_fps = 120
-config.font_size = 15
+config.font_size = 16
 config.font = wezterm.font("Maple Mono")
 config.color_scheme = scheme_for_appearance(get_appearance())
 config.tab_bar_at_bottom = true
