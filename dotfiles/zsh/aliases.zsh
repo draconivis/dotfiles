@@ -1,6 +1,7 @@
-alias ls=lsd
-alias ll='ls -lh'
-alias la='ls -lAh'
+alias vim=nvim
+alias ls=eza
+alias ll='ls -l'
+alias la='ls -lA'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
