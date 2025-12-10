@@ -1,0 +1,47 @@
+-- Debug Adapter Protocol (disabled)
+-- return {
+-- 	"mfussenegger/nvim-dap",
+-- 	dependencies = { "xdebug/vscode-php-debug", "rcarriga/nvim-dap-ui", "theHamsta/nvim-dap-virtual-text" },
+-- 	config = function()
+-- 		local dap = require("dap")
+-- 		dap.adapters.php = {
+-- 			type = "executable",
+-- 			command = "node",
+-- 			args = { os.getenv("HOME") .. "/vscode-php-debug/out/phpDebug.js" },
+-- 		}
+--
+-- 		dap.configurations.php = {
+-- 			{
+-- 				type = "php",
+-- 				request = "launch",
+-- 				name = "Listen for Xdebug",
+-- 				port = 9003,
+-- 			},
+-- 		}
+-- 	end,
+-- 	keys = {
+-- 		{
+-- 			"<leader>db",
+-- 			function()
+-- 				require("dap").toggle_breakpoint()
+-- 			end,
+-- 			desc = "Toggle Breakpoint",
+-- 		},
+-- 		{
+-- 			"<leader>dc",
+-- 			function()
+-- 				require("dap").continue()
+-- 			end,
+-- 			desc = "Continue",
+-- 		},
+-- 		{
+-- 			"<leader>dT",
+-- 			function()
+-- 				require("dap").terminate()
+-- 			end,
+-- 			desc = "Terminate",
+-- 		},
+-- 	},
+-- }
+
+return {}
