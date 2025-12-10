@@ -26,7 +26,7 @@ local function scheme_for_appearance(appearance)
 	end
 end
 -- Spawn a fish shell in login mode
-config.default_prog = { '/opt/homebrew/bin/fish', '-l' }
+config.default_prog = { "/opt/homebrew/bin/fish", "-l" }
 config.max_fps = 120
 config.font_size = 16
 config.font = wezterm.font("Maple Mono")
@@ -46,6 +46,7 @@ config.keys = {
 	-- wezterm controls
 	{ key = "r", mods = "CTRL|SHIFT", action = act.ReloadConfiguration },
 	{ key = "l", mods = "CTRL|SHIFT", action = wezterm.action.ShowDebugOverlay },
+	{ key = "m", mods = "CMD", action = wezterm.action.Hide },
 	-- { key = "u", mods = "CTRL|SHIFT", action = wezterm.plugin.update_all() },
 	{ key = "s", mods = "LEADER", action = workspace_switcher.switch_workspace() },
 	{ key = "-", mods = "CTRL", action = act.DecreaseFontSize },
@@ -63,18 +64,19 @@ config.keys = {
 	{ key = "c", mods = "ALT", action = act.SpawnTab("CurrentPaneDomain") },
 	--- switch to right tab
 	{ key = "n", mods = "ALT", action = act.ActivateTabRelative(1) },
-	{ key = "RightArrow", mods = "ALT", action = act.ActivateTabRelative(1) },
+	-- { key = "RightArrow", mods = "ALT", action = act.ActivateTabRelative(1) },
 	--- switch to left tab
 	{ key = "p", mods = "ALT", action = act.ActivateTabRelative(-1) },
-	{ key = "LeftArrow", mods = "ALT", action = act.ActivateTabRelative(-1) },
+	-- { key = "LeftArrow", mods = "ALT", action = act.ActivateTabRelative(-1) },
 	--- switch to last active tab
 	-- { key = "a",          mods = "ALT",        action = act.ActivateLastTab },
+	{ key = "Tab", mods = "ALT", action = act.ActivateLastTab },
 	--- move tab right
 	{ key = ">", mods = "ALT|SHIFT", action = act.MoveTabRelative(1) },
-	{ key = "RightArrow", mods = "ALT|SHIFT", action = act.MoveTabRelative(1) },
+	{ key = "N", mods = "ALT|SHIFT", action = act.MoveTabRelative(1) },
 	--- move tab left
 	{ key = "<", mods = "ALT|SHIFT", action = act.MoveTabRelative(-1) },
-	{ key = "LeftArrow", mods = "ALT|SHIFT", action = act.MoveTabRelative(-1) },
+	{ key = "P", mods = "ALT|SHIFT", action = act.MoveTabRelative(-1) },
 
 	-- pane controls
 	--- splitting
@@ -112,11 +114,11 @@ config.keys = {
 	{ key = "/", mods = "ALT", action = act.Search({ CaseInSensitiveString = "" }) },
 }
 
--- for i = 1, 9 do
--- 	-- pane controls, continued
--- 	table.insert(config.keys, { key = tostring(i), mods = "ALT", action = act.ActivateTab(i - 1) })
--- 	table.insert(config.keys, { key = tostring(i), mods = "ALT|CTRL", action = act.MoveTab(i - 1) })
--- end
+for i = 1, 9 do
+	-- pane controls, continued
+	table.insert(config.keys, { key = tostring(i), mods = "ALT", action = act.ActivateTab(i - 1) })
+	-- table.insert(config.keys, { key = tostring(i), mods = "ALT|CTRL", action = act.MoveTab(i - 1) })
+end
 
 config.key_tables = {
 	-- Defines the keys that are active in our resize-pane mode.
