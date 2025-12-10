@@ -1,51 +1,70 @@
 {
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0",
   "schemes" : [
     {
+      "pointer" : {
+        "disableAcceleration" : true,
+        "acceleration" : 1
+      },
+      "if" : {
+        "device" : {
+          "productName" : "Xtrfy Wireless Receiver",
+          "vendorID" : "0x25a7",
+          "productID" : "0xfa99",
+          "category" : "mouse"
+        }
+      },
       "scrolling" : {
+        "modifiers" : {
+          "vertical" : {
+            "shift" : {
+              "scale" : 3,
+              "type" : "changeSpeed"
+            }
+          }
+        },
         "reverse" : {
           "vertical" : true
         },
-        "acceleration" : {
-          "vertical" : 5,
-          "horizontal" : 1
-        },
         "distance" : {
-          "vertical" : "auto",
-          "horizontal" : 5
+          "horizontal" : 5,
+          "vertical" : "auto"
         },
         "speed" : {
           "horizontal" : 0,
           "vertical" : 50
         },
-        "modifiers" : {
-          "vertical" : {
-            "shift" : {
-              "scale" : 3,
-              "type" : "changeSpeed"
-            }
-          }
+        "acceleration" : {
+          "horizontal" : 1,
+          "vertical" : 5
         }
       },
+      "buttons" : {
+        "clickDebouncing" : {
+          "timeout" : 0,
+          "buttons" : [
+            0
+          ]
+        }
+      }
+    },
+    {
       "pointer" : {
         "acceleration" : 1,
+        "speed" : 0.1069,
         "disableAcceleration" : true
       },
       "if" : {
         "device" : {
           "vendorID" : "0x25a7",
-          "productName" : "Xtrfy Wireless Receiver",
           "category" : "mouse",
-          "productID" : "0xfa99"
+          "productID" : "0xfa92",
+          "productName" : "Xtrfy Wireless Mouse"
         }
-      }
-    },
-    {
+      },
       "scrolling" : {
         "acceleration" : {
           "vertical" : 5
-        },
-        "reverse" : {
-          "vertical" : true
         },
         "speed" : {
           "vertical" : 50
@@ -53,26 +72,34 @@
         "modifiers" : {
           "vertical" : {
             "shift" : {
-              "scale" : 3,
-              "type" : "changeSpeed"
+              "type" : "changeSpeed",
+              "scale" : 3
             }
           }
+        },
+        "reverse" : {
+          "vertical" : true
         }
+      }
+    },
+    {
+      "pointer" : {
+        "speed" : 0.8,
+        "acceleration" : 1
       },
       "if" : {
         "device" : {
-          "productName" : "Xtrfy Wireless Mouse",
-          "category" : "mouse",
-          "vendorID" : "0x25a7",
-          "productID" : "0xfa92"
+          "vendorID" : "0x0",
+          "category" : "trackpad",
+          "productID" : "0x0",
+          "productName" : "Apple Internal Keyboard \/ Trackpad"
         }
       },
-      "pointer" : {
-        "acceleration" : 1,
-        "speed" : 0.1069,
-        "disableAcceleration" : true
+      "scrolling" : {
+        "acceleration" : {
+          "vertical" : 1
+        }
       }
     }
-  ],
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.10.0"
+  ]
 }
