@@ -72,3 +72,20 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 export PATH="$PATH:/nix/var/nix/profiles/default/bin"
 
 if [ -e /home/patrick/.nix-profile/etc/profile.d/nix.sh ]; then . /home/patrick/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+# Created by `pipx` on 2025-03-12 19:07:03
+export PATH="$PATH:/Users/patrick/.local/bin"
+
+# bun completions
+[ -s "/Users/patrick/.bun/_bun" ] && source "/Users/patrick/.bun/_bun"
+
+# jj completions
+source <(jj util completion zsh)
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
