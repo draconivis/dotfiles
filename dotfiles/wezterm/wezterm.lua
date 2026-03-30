@@ -49,6 +49,30 @@ config.keys = {
 	{ key = "m", mods = "CMD", action = wezterm.action.Hide },
 	-- { key = "u", mods = "CTRL|SHIFT", action = wezterm.plugin.update_all() },
 	{ key = "s", mods = "LEADER", action = workspace_switcher.switch_workspace() },
+	-- {
+	-- 	key = "s",
+	-- 	mods = "LEADER",
+	-- 	action = act.PromptInputLine({
+	-- 		description = wezterm.format({
+	-- 			{ Attribute = { Intensity = "Bold" } },
+	-- 			{ Foreground = { AnsiColor = "Fuchsia" } },
+	-- 			{ Text = "Enter name for new workspace" },
+	-- 		}),
+	-- 		action = wezterm.action_callback(function(window, pane, line)
+	-- 			-- line will be `nil` if they hit escape without entering anything
+	-- 			-- An empty string if they just hit enter
+	-- 			-- Or the actual line of text they wrote
+	-- 			if line then
+	-- 				window:perform_action(
+	-- 					act.SwitchToWorkspace({
+	-- 						name = line,
+	-- 					}),
+	-- 					pane
+	-- 				)
+	-- 			end
+	-- 		end),
+	-- 	}),
+	-- },
 	{ key = "-", mods = "CTRL", action = act.DecreaseFontSize },
 	{ key = "=", mods = "CTRL", action = act.IncreaseFontSize },
 	{ key = "0", mods = "CTRL", action = act.ResetFontSize },
@@ -116,7 +140,7 @@ config.keys = {
 
 for i = 1, 9 do
 	-- pane controls, continued
-	table.insert(config.keys, { key = tostring(i), mods = "ALT", action = act.ActivateTab(i - 1) })
+	table.insert(config.keys, { key = tostring(i), mods = "CMD", action = act.ActivateTab(i - 1) })
 	-- table.insert(config.keys, { key = tostring(i), mods = "ALT|CTRL", action = act.MoveTab(i - 1) })
 end
 
