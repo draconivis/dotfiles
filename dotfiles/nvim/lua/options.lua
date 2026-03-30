@@ -62,10 +62,19 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
---inline diagnostics
+-- Sets how neovim will display certain whitespace in the editor
+vim.o.list = true
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+
+-- Diagnostic config
 vim.diagnostic.config({
-	-- virtual_lines = true,
+	update_in_insert = false,
+	severity_sort = true,
+	float = { border = "rounded", source = "if_many" },
+	underline = { severity = { min = vim.diagnostic.severity.WARN } },
+	-- virtual_lines = false,
 	virtual_text = true,
+	jump = { float = true },
 })
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),

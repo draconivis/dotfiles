@@ -1,6 +1,6 @@
 -- Collection of various small independent plugins/modules
 return {
-	"echasnovski/mini.nvim",
+	"nvim-mini/mini.nvim",
 	version = false,
 	dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
 	config = function()
@@ -18,6 +18,9 @@ return {
 		-- - sd'   - [S]urround [D]elete [']quotes
 		-- - sr)'  - [S]urround [R]eplace [)] [']
 		require("mini.surround").setup()
+		require("ts_context_commentstring").setup({
+			enable_autocmd = false,
+		})
 		require("mini.comment").setup({
 			options = {
 				custom_commentstring = function()
