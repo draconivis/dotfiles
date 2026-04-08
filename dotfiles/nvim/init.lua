@@ -216,8 +216,9 @@ require("lazy").setup({
                 { "<leader>c", group = "[C]ode", mode = { "n", "x" } },
                 { "<leader>g", group = "[G]it", mode = { "n", "x" } },
                 { "<leader>r", group = "[R]ename" },
-                { "<leader>u", group = "[U]ndotree" },
+                -- { "<leader>u", group = "[U]ndotree" },
                 { "<leader>c", group = "[c]oerce (change casing)" },
+                { "<leader>l", group = "[L]azy..." },
             },
         },
     },
@@ -246,7 +247,7 @@ require("lazy").setup({
                 function()
                     Snacks.lazygit()
                 end,
-                desc = "Lazygit",
+                desc = "Lazy[g]it",
             },
             {
                 "<leader>gf",
@@ -875,7 +876,7 @@ require("lazy").setup({
     {
         "mbbill/undotree",
         config = function()
-            vim.keymap.set("n", "<leader>ut", vim.cmd.UndotreeToggle, { desc = "[U]ndotree [T]oggle" })
+            vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "toggle [U]ndotree" })
         end,
     },
     {
