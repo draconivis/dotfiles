@@ -1,14 +1,14 @@
 -- [[ Basic Keymaps ]]
 vim.api.nvim_create_user_command("Wa", function()
-	vim.cmd("wa")
+    vim.cmd("wa")
 end, {})
 vim.api.nvim_create_user_command("Wqa", function()
-	vim.cmd("wqa")
+    vim.cmd("wqa")
 end, {})
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
--- vim.opt.hlsearch = true // CHECK
+-- vim.o.hlsearch = true // CHECK
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- Diagnostic keymaps
@@ -40,9 +40,9 @@ vim.keymap.set("n", "<TAB>", "<C-^>", { desc = "Alternate buffers" })
 -- [[ Basic Autocommands ]]
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.hl.on_yank()
-	end,
+    desc = "Highlight when yanking (copying) text",
+    group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+    callback = function()
+        vim.hl.on_yank()
+    end,
 })

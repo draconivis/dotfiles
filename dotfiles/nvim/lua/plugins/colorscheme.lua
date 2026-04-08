@@ -11,7 +11,7 @@ return {
 		require("auto-dark-mode").setup()
 
 		-- set background and colorscheme
-		-- vim.opt.background = "light"
+		-- vim.o.background = "light"
 		vim.cmd.colorscheme("rose-pine")
 	end,
 }
