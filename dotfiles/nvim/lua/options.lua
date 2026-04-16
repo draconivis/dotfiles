@@ -64,7 +64,7 @@ vim.o.scrolloff = 10
 
 -- Sets how neovim will display certain whitespace in the editor
 vim.o.list = true
-vim.o.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 -- Diagnostic config
 vim.diagnostic.config({
@@ -83,4 +83,4 @@ vim.diagnostic.config({
 vim.o.confirm = true
 
 -- fzf
-vim.o.rtp:append("/opt/homebrew/bin/fzf")
+vim.opt.rtp:append("/opt/homebrew/bin/fzf")
