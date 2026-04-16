@@ -17,7 +17,6 @@ vim.api.nvim_create_autocmd("PackChanged", {
 vim.pack.add({
     -- No setup needed
     "https://github.com/nvim-lua/plenary.nvim",
-    "https://github.com/tpope/vim-repeat",
     "https://github.com/mbbill/undotree",
     "https://github.com/tpope/vim-abolish",
 
@@ -44,8 +43,6 @@ vim.pack.add({
     "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim",
     "https://github.com/j-hui/fidget.nvim",
     "https://github.com/neovim/nvim-lspconfig",
-    "https://github.com/jay-babu/mason-null-ls.nvim",
-    "https://github.com/nvimtools/none-ls.nvim",
 
     -- Treesitter
     "https://github.com/nvim-treesitter/nvim-treesitter",
@@ -238,6 +235,7 @@ require("conform").setup({
     notify_on_error = false,
     formatters_by_ft = {
         lua = { "stylua" },
+        php = { "php_cs_fixer" },
     },
 })
 
@@ -303,7 +301,6 @@ require("mini.comment").setup({
 })
 require("mini.icons").setup()
 require("mini.indentscope").setup()
-require("mini.git").setup()
 require("mini.statusline").setup()
 
 -- =============================================================================
@@ -442,17 +439,6 @@ end
 function PhpactorBlackfireFinish()
     local _, _ = vim.lsp.buf_request_sync(0, "blackfire/finish", {})
 end
-
--- =============================================================================
--- none-ls
--- =============================================================================
-
-require("null-ls").setup({})
-require("mason-null-ls").setup({
-    ensure_installed = {},
-    automatic_installation = false,
-    handlers = {},
-})
 
 -- =============================================================================
 -- Treesitter
