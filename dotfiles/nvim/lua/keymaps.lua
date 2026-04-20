@@ -5,6 +5,9 @@ end, {})
 vim.api.nvim_create_user_command("Wqa", function()
     vim.cmd("wqa")
 end, {})
+vim.api.nvim_create_user_command("VimPackUpdate", function()
+    vim.pack.update()
+end, {})
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
